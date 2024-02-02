@@ -22,6 +22,7 @@ class Simulator {
   std::list<Objects> objects;
   // functions
   std::shared_ptr<sf::Window> get_window();
+  bool render();
  private:
   std::shared_ptr<sf::Window> window;
 };
