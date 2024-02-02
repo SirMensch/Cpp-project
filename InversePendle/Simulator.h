@@ -7,24 +7,23 @@
 #include <memory>
 #include <list>
 
-#include <SFML/Window.hpp>
+#include "SFML/Graphics.hpp"
 
-#include "Objects.h"
+#include "Object.h"
 
 
 class Simulator {
  public:
   // constructor
-  Simulator(){
-    window = std::make_shared<sf::Window>(sf::VideoMode(800, 600), "Inverse Pendulum");
-  }
-  // variables
-  std::list<Objects> objects;
+  Simulator();
   // functions
-  std::shared_ptr<sf::Window> get_window();
+  std::shared_ptr<sf::RenderWindow> get_window();
   bool render();
+  bool addObject(Object& object);
  private:
-  std::shared_ptr<sf::Window> window;
+  // variables
+  std::list<std::shared_ptr<Object>> objects;
+  std::shared_ptr<sf::RenderWindow> window;
 };
 
 #endif //INVERSEPENDLE__SIMULATOR_H_

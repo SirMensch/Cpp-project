@@ -63,8 +63,15 @@ build CMakeFiles/InversePendle.dir/Simulator.cpp.obj: CXX_COMPILER__InversePendl
   OBJECT_DIR = CMakeFiles\InversePendle.dir
   OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
 
-build CMakeFiles/InversePendle.dir/Objects.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Objects.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\Objects.cpp.obj.d
+build CMakeFiles/InversePendle.dir/Object.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Object.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\Object.cpp.obj.d
+  FLAGS = -g -fdiagnostics-color=always -std=gnu++20
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  OBJECT_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+
+build CMakeFiles/InversePendle.dir/Stick.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Stick.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\Stick.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
   INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
@@ -78,7 +85,7 @@ build CMakeFiles/InversePendle.dir/Objects.cpp.obj: CXX_COMPILER__InversePendle_
 #############################################
 # Link the executable InversePendle.exe
 
-build InversePendle.exe: CXX_EXECUTABLE_LINKER__InversePendle_Debug CMakeFiles/InversePendle.dir/main.cpp.obj CMakeFiles/InversePendle.dir/Simulator.cpp.obj CMakeFiles/InversePendle.dir/Objects.cpp.obj | H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a
+build InversePendle.exe: CXX_EXECUTABLE_LINKER__InversePendle_Debug CMakeFiles/InversePendle.dir/main.cpp.obj CMakeFiles/InversePendle.dir/Simulator.cpp.obj CMakeFiles/InversePendle.dir/Object.cpp.obj CMakeFiles/InversePendle.dir/Stick.cpp.obj | H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a
   FLAGS = -g
   LINK_LIBRARIES = H:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a  H:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a  H:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\InversePendle.dir
