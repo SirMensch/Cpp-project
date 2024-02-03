@@ -22,6 +22,9 @@ bool Simulator::render() {
   window->clear(sf::Color::Black);
 
   // draw everything here...
+  for (auto &object : objects){
+    window->draw(*object->getRectangle());
+  }
   // window.draw(...);
 
   // end the current frame
@@ -37,7 +40,12 @@ Simulator::Simulator() {
   window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "Inverse Pendulum");
   window->setActive(true);
 }
-bool Simulator::addObject(Object& object) {
-  objects.push_back(std::make_shared<Object>(object));
+bool Simulator::addPlatform(Platform &platform) {
+  objects.push_back(std::make_shared<Platform>(platform));
   return false;
 }
+bool Simulator::addStick(Stick &stick) {
+  objects.push_back(std::make_shared<Stick>(stick));
+  return false;
+}
+

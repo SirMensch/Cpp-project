@@ -9,8 +9,8 @@
 
 #include "SFML/Graphics.hpp"
 
-#include "Object.h"
-
+#include "Stick.h"
+#include "Platform.h"
 
 class Simulator {
  public:
@@ -19,7 +19,9 @@ class Simulator {
   // functions
   std::shared_ptr<sf::RenderWindow> get_window();
   bool render();
-  bool addObject(Object& object);
+  bool addStick(Stick& stick);
+  bool addPlatform(Platform& platform);
+
  private:
   // variables
   std::list<std::shared_ptr<Object>> objects;

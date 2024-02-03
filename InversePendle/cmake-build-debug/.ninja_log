@@ -1,4 +1,20 @@
 # ninja log v5
 3	628	7276534266290530	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
 628	730	7276534267292459	InversePendle.exe	8584d12ba2f3126f
-0	131	7286116979387955	build.ninja	ec306691988f69c2
+0	131	7286565114173181	build.ninja	ec306691988f69c2
+18	1765	7286590585112689	CMakeFiles/InversePendle.dir/Stick.cpp.obj	fdcfb9a905bdcb3a
+13	1766	7286590585112689	CMakeFiles/InversePendle.dir/Platform.cpp.obj	e97785985644633
+3	1785	7286590585302678	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+7	1786	7286590585322698	CMakeFiles/InversePendle.dir/Object.cpp.obj	a0adc40c50b7caa8
+10	1848	7286590585922696	CMakeFiles/InversePendle.dir/Simulator.cpp.obj	744fd12a033b06cb
+1848	2662	7286590594006159	InversePendle.exe	638a164974a2df60
+4	840	7286590891245397	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+849	991	7286590892736948	InversePendle.exe	638a164974a2df60
+3	835	7286591208390553	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+835	976	7286591209780552	InversePendle.exe	638a164974a2df60
+2	829	7286591469764390	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+829	972	7286591471164085	InversePendle.exe	638a164974a2df60
+3	819	7286591638348097	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+819	959	7286591639728108	InversePendle.exe	638a164974a2df60
+3	835	7286591756714830	CMakeFiles/InversePendle.dir/main.cpp.obj	6c76f48f06b6ede2
+836	978	7286591758124845	InversePendle.exe	638a164974a2df60

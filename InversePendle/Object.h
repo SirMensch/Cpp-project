@@ -7,14 +7,16 @@
 
 #include <memory>
 #include "SFML/Graphics/RectangleShape.hpp"
+#include "structs.h"
 
 class Object {
  public:
   // constructor
-  Object(float width, float height); // both in cm
+  Object(float width, float height, Orientation orientation); // both in cm
   virtual ~Object() = default;
   // functions
-  virtual void updatePositon(float time_delta) = 0;
+  std::shared_ptr<sf::RectangleShape> getRectangle();
+  virtual Orientation updatePosition(float time_delta) = 0;
  private:
   // variables
   std::shared_ptr<sf::RectangleShape> rectangle;
