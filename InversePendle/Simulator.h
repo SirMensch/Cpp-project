@@ -6,26 +6,26 @@
 
 #include <memory>
 #include <list>
+#include <iostream>
 
 #include "SFML/Graphics.hpp"
 
-#include "Stick.h"
-#include "Platform.h"
+#include "InversePendulum.h"
 
 class Simulator {
  public:
   // constructor
-  Simulator();
+  explicit Simulator(int framerate);
   // functions
   std::shared_ptr<sf::RenderWindow> get_window();
   bool render();
-  bool addStick(Stick& stick);
-  bool addPlatform(Platform& platform);
+  void addInversePendle(InversePendulum& inverse_pendulum);
 
  private:
   // variables
-  std::list<std::shared_ptr<Object>> objects;
-  std::shared_ptr<sf::RenderWindow> window;
+  std::shared_ptr<InversePendulum> inverse_pendulum_ = nullptr;
+  std::shared_ptr<sf::RenderWindow> window_;
+  int framerate_;
 };
 
 #endif //INVERSEPENDLE__SIMULATOR_H_

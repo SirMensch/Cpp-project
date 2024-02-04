@@ -12,15 +12,16 @@
 class Object {
  public:
   // constructor
+  Object() = default;
   Object(float width, float height, Orientation orientation); // both in cm
   virtual ~Object() = default;
   // functions
   std::shared_ptr<sf::RectangleShape> getRectangle();
-  virtual Orientation updatePosition(float time_delta) = 0;
+  virtual bool updatePosition(Orientation orientation) = 0;
  private:
   // variables
   std::shared_ptr<sf::RectangleShape> rectangle;
-  float weight;
+  float weight = 0;
 };
 
 #endif // INVERSEPENDLE__OBJECT_H_

@@ -11,4 +11,15 @@ struct Orientation {
   float angle = 0.f;
 };
 
+struct Differentials {
+  float acc = 0;
+  float vel = 0;
+  float pos = 0;
+
+  friend std::ostream& operator <<(std::ostream& os, const Differentials& differentials){
+    os << differentials.pos << " " << differentials.vel << " " << differentials.acc << std::endl;
+    return os;
+  }
+};
+
 #endif //INVERSEPENDLE__STRUCTS_H_

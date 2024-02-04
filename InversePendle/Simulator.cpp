@@ -4,48 +4,62 @@
 
 #include "Simulator.h"
 
+Simulator::Simulator(int framerate) {
+  window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "Inverse Pendulum");
+  // Check if the window was created successfully
+  if (!window_->isOpen()) {
+    std::cerr << "Failed to create SFML window." << std::endl;
+  }
+  window_->setActive(true);
+  window_->setFramerateLimit(framerate);
+  framerate_ = framerate;
+}
+
 std::shared_ptr<sf::RenderWindow> Simulator::get_window() {
-  return window;
+  return window_;
 }
 
 bool Simulator::render() {
   bool finish = false;
+    if(inverse_pendulum_ == nullptr){
+      std::cout << "No Pendulum" << std::endl;
+      return false;
+    }
   // check all the window's events that were triggered since the last iteration of the loop
-  sf::Event event;
-  while (window->pollEvent(event)) {
+  sf::Event event = *new sf::Event();
+  while (window_->pollEvent(event)) {
     // "close requested" event: we close the window
     if (event.type == sf::Event::Closed)
-      window->close();
+      window_->close();
   }
 
   // clear the window with black color
-  window->clear(sf::Color::Black);
+  window_->clear(sf::Color::Black);
 
   // draw everything here...
-  for (auto &object : objects){
-    window->draw(*object->getRectangle());
+  for (auto &object : inverse_pendulum_->update(1.f/float(framerate_))) {
+    window_->draw(*object->getRectangle());
   }
   // window.draw(...);
 
   // end the current frame
-  window->display();
+  window_->display();
 
-  if(!window->isOpen()) {
+  if (!window_->isOpen()) {
     return true;
   }
   return false;
 }
+void Simulator::addInversePendle(InversePendulum &inverse_pendulum) {
+  inverse_pendulum_ = std::make_shared<InversePendulum>(inverse_pendulum);
+}
 
-Simulator::Simulator() {
-  window = std::make_shared<sf::RenderWindow>(sf::VideoMode(800, 600), "Inverse Pendulum");
-  window->setActive(true);
-}
-bool Simulator::addPlatform(Platform &platform) {
-  objects.push_back(std::make_shared<Platform>(platform));
-  return false;
-}
-bool Simulator::addStick(Stick &stick) {
-  objects.push_back(std::make_shared<Stick>(stick));
-  return false;
-}
+
+
+
+
+
+
+
+
 

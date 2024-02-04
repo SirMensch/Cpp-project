@@ -10,9 +10,10 @@
 class Stick : public Object {
  public:
   //Constructor
+  Stick() = default;
   Stick(float width, float height, Orientation orientation);
   //function
-  Orientation updatePosition(float time_delta) override;
+  bool updatePosition(Orientation orientation) override;
  private:
 };
 

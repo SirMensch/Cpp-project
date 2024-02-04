@@ -3,9 +3,14 @@
 //
 
 #include "Stick.h"
-Orientation Stick::updatePosition(float time_delta) {
-  // TODO euler method for the stick
-  Orientation orientation;
-  return orientation;
+bool Stick::updatePosition(Orientation orientation) {
+  // TODO use boolean of this function & fix offset in connection
+  try {
+    Object::getRectangle()->setPosition(orientation.x, orientation.y);
+    Object::getRectangle()->setRotation(orientation.angle);
+  } catch (...) {
+    return false;
+  }
+  return true;
 }
 Stick::Stick(float width, float height, Orientation orientation) : Object(width, height, orientation) {}

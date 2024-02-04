@@ -10,9 +10,10 @@
 class Platform : public Object{
  public:
   //Constructor
+  Platform() = default;
   Platform(float width, float height, Orientation orientation);
   //function
-  Orientation updatePosition(float time_delta) override;
+  bool updatePosition(Orientation orientation) override;
  private:
 };
 

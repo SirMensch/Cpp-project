@@ -3,9 +3,15 @@
 //
 
 #include "Platform.h"
-Orientation Platform::updatePosition(float time_delta) {
-  // TODO euler method for the stick
-  Orientation orientation;
-  return orientation;
+bool Platform::updatePosition(Orientation orientation) {
+  // TODO check for the return value
+  try {
+    Object::getRectangle()->setPosition(orientation.x, orientation.y);
+  } catch (...) {
+    return false;
+  }
+  return true;
 }
-Platform::Platform(float width, float height, Orientation orientation) : Object(width, height, orientation) {}
+Platform::Platform(float width, float height, Orientation orientation) : Object(width, height, orientation) {
+  Object::getRectangle()->setFillColor(sf::Color::Blue);
+}

@@ -1,21 +1,17 @@
 #include <iostream>
 #include <memory>
 #include "Simulator.h"
-#include "Stick.h"
-#include "Platform.h"
+#include "InversePendulum.h"
+
+#define FRAMERATE 60
 
 int main() {
   // setup
-  std::unique_ptr<Simulator> simulator = std::make_unique<Simulator>();
+  std::unique_ptr<Simulator> simulator = std::make_unique<Simulator>(FRAMERATE);
 
-  Orientation orientation_stick = {400, 350, 0};
-  Stick stick(5, 50, orientation_stick);
-  Orientation orientation_platform = {350, 400, 0};
-  Platform platform(100, 20, orientation_platform);
+  std::shared_ptr<InversePendulum> inverse_pendulum = std::make_shared<InversePendulum>(100, 20, 10, 50);
 
-  simulator->addStick(stick);
-  simulator->addPlatform(platform);
-
+  simulator->addInversePendle(*inverse_pendulum);
 
   // render loop
   bool finished = false;
