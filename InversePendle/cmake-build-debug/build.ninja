@@ -49,47 +49,47 @@ cmake_ninja_workdir = E$:/CLion$ 2023.1.4/Projects/InversePendle/cmake-build-deb
 
 build cmake_object_order_depends_target_InversePendle: phony || CMakeFiles/InversePendle.dir
 
-build CMakeFiles/InversePendle.dir/main.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/main.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\main.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/main.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/main.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\main.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
-build CMakeFiles/InversePendle.dir/Simulator.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Simulator.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\Simulator.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/Simulator.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/Simulator.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\Simulator.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
-build CMakeFiles/InversePendle.dir/Object.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Object.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\Object.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/Object.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/Object.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\Object.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
-build CMakeFiles/InversePendle.dir/Stick.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Stick.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\Stick.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/Stick.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/Stick.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\Stick.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
-build CMakeFiles/InversePendle.dir/Platform.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/Platform.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\Platform.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/Platform.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/Platform.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\Platform.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
-build CMakeFiles/InversePendle.dir/InversePendulum.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/InversePendulum.cpp || cmake_object_order_depends_target_InversePendle
-  DEP_FILE = CMakeFiles\InversePendle.dir\InversePendulum.cpp.obj.d
+build CMakeFiles/InversePendle.dir/src/InversePendulum.cpp.obj: CXX_COMPILER__InversePendle_Debug E$:/CLion$ 2023.1.4/Projects/InversePendle/src/InversePendulum.cpp || cmake_object_order_depends_target_InversePendle
+  DEP_FILE = CMakeFiles\InversePendle.dir\src\InversePendulum.cpp.obj.d
   FLAGS = -g -fdiagnostics-color=always -std=gnu++20
-  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -Ih:/C++-Libraries/SFML-2.6.1/include -isystem H:/C++-Libraries/SFML-2.6.1/include
+  INCLUDES = -I"E:/CLion 2023.1.4/Projects/InversePendle/headers" -I/usr/include -I"E:/CLion 2023.1.4/Projects/InversePendle/libs/SFML" -isystem H:/C++-Libraries/SFML-2.6.1/include
   OBJECT_DIR = CMakeFiles\InversePendle.dir
-  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir
+  OBJECT_FILE_DIR = CMakeFiles\InversePendle.dir\src
 
 
 # =============================================================================
@@ -99,7 +99,7 @@ build CMakeFiles/InversePendle.dir/InversePendulum.cpp.obj: CXX_COMPILER__Invers
 #############################################
 # Link the executable InversePendle.exe
 
-build InversePendle.exe: CXX_EXECUTABLE_LINKER__InversePendle_Debug CMakeFiles/InversePendle.dir/main.cpp.obj CMakeFiles/InversePendle.dir/Simulator.cpp.obj CMakeFiles/InversePendle.dir/Object.cpp.obj CMakeFiles/InversePendle.dir/Stick.cpp.obj CMakeFiles/InversePendle.dir/Platform.cpp.obj CMakeFiles/InversePendle.dir/InversePendulum.cpp.obj | H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a
+build InversePendle.exe: CXX_EXECUTABLE_LINKER__InversePendle_Debug CMakeFiles/InversePendle.dir/src/main.cpp.obj CMakeFiles/InversePendle.dir/src/Simulator.cpp.obj CMakeFiles/InversePendle.dir/src/Object.cpp.obj CMakeFiles/InversePendle.dir/src/Stick.cpp.obj CMakeFiles/InversePendle.dir/src/Platform.cpp.obj CMakeFiles/InversePendle.dir/src/InversePendulum.cpp.obj | H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a H$:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a
   FLAGS = -g
   LINK_LIBRARIES = H:/C++-Libraries/SFML-2.6.1/lib/libsfml-graphics-d.a  H:/C++-Libraries/SFML-2.6.1/lib/libsfml-window-d.a  H:/C++-Libraries/SFML-2.6.1/lib/libsfml-system-d.a  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\InversePendle.dir

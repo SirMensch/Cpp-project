@@ -11,7 +11,7 @@ int main() {
 
   std::shared_ptr<InversePendulum> inverse_pendulum = std::make_shared<InversePendulum>(100, 20, 10, 50);
 
-  simulator->addInversePendle(*inverse_pendulum);
+  simulator->addInversePendulum(*inverse_pendulum);
 
   // render loop
   bool finished = false;

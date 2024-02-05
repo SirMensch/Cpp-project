@@ -18,12 +18,14 @@ Simulator::Simulator(int framerate) {
 std::shared_ptr<sf::RenderWindow> Simulator::get_window() {
   return window_;
 }
-
+/**
+ *
+ * @return says if rendering is finished -> it crashed or was closed
+ */
 bool Simulator::render() {
-  bool finish = false;
     if(inverse_pendulum_ == nullptr){
       std::cout << "No Pendulum" << std::endl;
-      return false;
+      return true;
     }
   // check all the window's events that were triggered since the last iteration of the loop
   sf::Event event = *new sf::Event();
@@ -50,7 +52,7 @@ bool Simulator::render() {
   }
   return false;
 }
-void Simulator::addInversePendle(InversePendulum &inverse_pendulum) {
+void Simulator::addInversePendulum(InversePendulum &inverse_pendulum) {
   inverse_pendulum_ = std::make_shared<InversePendulum>(inverse_pendulum);
 }
 

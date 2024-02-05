@@ -3,6 +3,7 @@
 //
 
 #include "Stick.h"
+
 bool Stick::updatePosition(Orientation orientation) {
   // TODO use boolean of this function & fix offset in connection
   try {

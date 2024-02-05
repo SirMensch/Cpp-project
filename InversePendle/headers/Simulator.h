@@ -19,7 +19,7 @@ class Simulator {
   // functions
   std::shared_ptr<sf::RenderWindow> get_window();
   bool render();
-  void addInversePendle(InversePendulum& inverse_pendulum);
+  void addInversePendulum(InversePendulum& inverse_pendulum);
 
  private:
   // variables
