@@ -5,6 +5,8 @@
 #ifndef INVERSEPENDLE__OBJECT_H_
 #define INVERSEPENDLE__OBJECT_H_
 
+#define DENSITY 10 // kg/cm^2
+
 #include <memory>
 #include "SFML/Graphics/RectangleShape.hpp"
 #include "structs.h"
@@ -18,10 +20,13 @@ class Object {
   // functions
   std::shared_ptr<sf::RectangleShape> getRectangle();
   virtual bool updatePosition(Orientation orientation) = 0;
+  [[nodiscard]] float getWeight() const;
+  [[nodiscard]] float getHeight() const;
+  [[nodiscard]] float getWidth() const;
  private:
   // variables
   std::shared_ptr<sf::RectangleShape> rectangle;
-  float weight = 0;
+  float weight_ = 0;
 };
 
 #endif // INVERSEPENDLE__OBJECT_H_

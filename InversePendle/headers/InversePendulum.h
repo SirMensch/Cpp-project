@@ -5,7 +5,7 @@
 #ifndef INVERSEPENDLE__INVERSEPENDULUM_H_
 #define INVERSEPENDLE__INVERSEPENDULUM_H_
 
-#define G 9.81f
+#define G 98.1f // cm/s^2
 
 #include <cmath>
 #include <memory>
@@ -26,9 +26,6 @@ class InversePendulum {
   Differentials diff_x_;
   Orientation platform_orientation_;
   Orientation stick_orientation_;
-  float length_stick_;
-  float mass_stick_;
-  float mass_platform_;
 };
 
 #endif //INVERSEPENDLE__INVERSEPENDULUM_H_

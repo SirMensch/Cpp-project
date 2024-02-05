@@ -6,6 +6,7 @@
 #define INVERSEPENDLE__STICK_H_
 
 #include "Object.h"
+#include <cmath>
 
 class Stick : public Object {
  public:

@@ -9,7 +9,7 @@ int main() {
   // setup
   std::unique_ptr<Simulator> simulator = std::make_unique<Simulator>(FRAMERATE);
 
-  std::shared_ptr<InversePendulum> inverse_pendulum = std::make_shared<InversePendulum>(100, 20, 10, 50);
+  std::shared_ptr<InversePendulum> inverse_pendulum = std::make_shared<InversePendulum>(100, 20, 10, 100);
 
   simulator->addInversePendulum(*inverse_pendulum);
 
