@@ -1,3 +1,0 @@
-E:/CLion 2023.1.4/Projects/isAnagram/cmake-build-debug/CMakeFiles/isAnagram.dir
-E:/CLion 2023.1.4/Projects/isAnagram/cmake-build-debug/CMakeFiles/edit_cache.dir
-E:/CLion 2023.1.4/Projects/isAnagram/cmake-build-debug/CMakeFiles/rebuild_cache.dir
