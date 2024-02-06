@@ -1,1 +1,0 @@
-CMakeLists.txt not found in E:\CLion 2023.1.4\Projects Select CMakeLists.txt
