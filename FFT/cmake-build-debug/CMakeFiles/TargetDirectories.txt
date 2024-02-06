@@ -1,3 +1,0 @@
-C:/Users/larsl/CLionProjects/FFT/cmake-build-debug/CMakeFiles/FFT.dir
-C:/Users/larsl/CLionProjects/FFT/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/Users/larsl/CLionProjects/FFT/cmake-build-debug/CMakeFiles/rebuild_cache.dir
