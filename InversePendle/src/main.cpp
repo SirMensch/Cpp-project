@@ -2,11 +2,15 @@
 #include <memory>
 #include "Simulator.h"
 #include "InversePendulum.h"
+#include "Config.h"
 
 #define FRAMERATE 60
 
 int main() {
   // setup
+  std::unordered_map<std::string, std::string> config = readConfig("config.txt");
+  bool ext_force = (config["ExtForce"] == "true");
+
   std::unique_ptr<Simulator> simulator = std::make_unique<Simulator>(FRAMERATE);
 
   std::shared_ptr<InversePendulum> inverse_pendulum = std::make_shared<InversePendulum>(100, 20, 10, 100);

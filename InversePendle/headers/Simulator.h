@@ -20,11 +20,10 @@ class Simulator {
   std::shared_ptr<sf::RenderWindow> get_window();
   bool render();
   void addInversePendulum(InversePendulum& inverse_pendulum);
-
  private:
   // variables
   std::shared_ptr<InversePendulum> inverse_pendulum_ = nullptr;
-  std::shared_ptr<sf::RenderWindow> window_;
+  std::shared_ptr<sf::RenderWindow> window_ = nullptr;
   int framerate_;
 };
 
