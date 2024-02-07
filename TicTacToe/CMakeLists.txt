@@ -3,9 +3,6 @@ project(TicTacToe)
 
 set(CMAKE_CXX_STANDARD 17)
 
-# Set the path to the SFML directory
-set(SFML_DIR "C:/Users/larsl/C++-Libraries/SFML-2.5.1/lib/cmake/SFML")
-
 # Find SFML components
 find_package(SFML 2.5.1 COMPONENTS graphics window system REQUIRED)
 
