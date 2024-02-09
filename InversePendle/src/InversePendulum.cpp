@@ -14,14 +14,14 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
   diff_x_ = {0, 0, platform_orientation_.x};
   diff_theta_ = {0, 0, float((stick_orientation_.angle - 180.f) / 180.f * M_PI)};
 }
-std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time) {
+std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, float external_force) {
   // TODO check for physics, feels weird, fix speed
   // calculate new values
   float theta_ddot = (diff_x_.acc * std::cos(diff_theta_.pos) + G * std::sin(diff_theta_.pos));
   theta_ddot /= stick_->getHeight();
 
-  float x_ddot = - diff_theta_.acc * std::cos(diff_theta_.pos);
-  x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos);
+  float x_ddot = -diff_theta_.acc * std::cos(diff_theta_.pos);
+  x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos) + external_force;
   x_ddot *= stick_->getWeight() * stick_->getHeight() / (stick_->getWeight() + platform_->getWeight());
 
   // update new values
@@ -37,8 +37,11 @@ std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time) {
   stick_orientation_.x += diff_x_.vel * delta_time;
   stick_orientation_.angle = 180.f * diff_theta_.pos / float(M_PI) + 180.f;
 
-  std::cout << "x: " << diff_x_ << std::endl;
-  std::cout << "theta:  " << diff_theta_ << std::endl;
+#if DEBUG
+  std::cout << "x: " << diff_x_ << "\n";
+  std::cout << "theta:  " << diff_theta_ << "\n";
+#endif
+
   //update objects
   stick_->updatePosition(stick_orientation_);
   platform_->updatePosition(platform_orientation_);

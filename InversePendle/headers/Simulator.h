@@ -11,6 +11,7 @@
 #include "SFML/Graphics.hpp"
 
 #include "InversePendulum.h"
+#include "EventHandler.h"
 
 class Simulator {
  public:

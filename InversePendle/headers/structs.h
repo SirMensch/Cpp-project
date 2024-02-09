@@ -5,6 +5,8 @@
 #ifndef INVERSEPENDLE__STRUCTS_H_
 #define INVERSEPENDLE__STRUCTS_H_
 
+#define G 98.1f
+
 struct Orientation {
   float x = 0.f;
   float y = 0.f;

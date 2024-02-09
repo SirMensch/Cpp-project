@@ -23,23 +23,36 @@ std::shared_ptr<sf::RenderWindow> Simulator::get_window() {
  * @return says if rendering is finished -> it crashed or was closed
  */
 bool Simulator::render() {
-    if(inverse_pendulum_ == nullptr){
-      std::cout << "No Pendulum" << std::endl;
-      return true;
-    }
+#if EXT_FORCE
+  int force_direction = 0;
+#endif
+  if (inverse_pendulum_ == nullptr) {
+    std::cout << "No Pendulum" << std::endl;
+    return true;
+  }
   // check all the window's events that were triggered since the last iteration of the loop
   sf::Event event = *new sf::Event();
   while (window_->pollEvent(event)) {
     // "close requested" event: we close the window
     if (event.type == sf::Event::Closed)
       window_->close();
+#if EXT_FORCE
+    if (event.type == sf::Event::KeyPressed) {
+      force_direction = handleLeftAndRightClick(event.key);
+    }
+#endif
   }
 
   // clear the window with black color
   window_->clear(sf::Color::Black);
 
   // draw everything here...
-  for (auto &object : inverse_pendulum_->update(1.f/float(framerate_))) {
+#if EXT_FORCE
+  float force = 1.f * float(force_direction); // button press is 100 kg*cm/s^2
+  for (auto &object : inverse_pendulum_->update(1.f / float(framerate_), force)) {
+#else
+    for (auto &object : inverse_pendulum_->update(1.f / float(framerate_))) {
+#endif
     window_->draw(*object->getRectangle());
   }
   // window.draw(...);

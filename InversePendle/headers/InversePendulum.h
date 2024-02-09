@@ -5,8 +5,6 @@
 #ifndef INVERSEPENDLE__INVERSEPENDULUM_H_
 #define INVERSEPENDLE__INVERSEPENDULUM_H_
 
-#define G 98.1f // cm/s^2
-
 #include <cmath>
 #include <memory>
 #include <iostream>
@@ -18,7 +16,7 @@
 class InversePendulum {
  public:
   InversePendulum(float platform_width, float platform_height, float stick_width, float stick_height);
-  std::list<std::shared_ptr<Object>> update(float delta_time);
+  std::list<std::shared_ptr<Object>> update(float delta_time, float force = 0.f);
  private:
   std::shared_ptr<Stick> stick_;
   std::shared_ptr<Platform> platform_;
