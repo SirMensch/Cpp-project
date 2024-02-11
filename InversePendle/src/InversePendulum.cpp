@@ -7,7 +7,7 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
   //set up stick and platform
   platform_orientation_ = *new Orientation(400.f - platform_width / 2.f, 400, 0);
   platform_ = std::make_shared<Platform>(platform_width, platform_height, platform_orientation_);
-  stick_orientation_ = *new Orientation(400.f + stick_width / 2.f, 400, 182);
+  stick_orientation_ = *new Orientation(400.f, 400, 182);
   stick_ = std::make_shared<Stick>(stick_width, stick_height, stick_orientation_);
 
   // set up the diff
@@ -17,12 +17,15 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
 std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, float external_force) {
   // TODO check for physics, feels weird, fix speed
   // calculate new values
-  float theta_ddot = (diff_x_.acc * std::cos(diff_theta_.pos) + G * std::sin(diff_theta_.pos));
+  float theta_ddot = (diff_x_.acc * std::cos(diff_theta_.pos) + 3.f * G * std::sin(diff_theta_.pos) -
+       MU_ROT * diff_theta_.vel);
   theta_ddot /= stick_->getHeight();
 
-  float x_ddot = -diff_theta_.acc * std::cos(diff_theta_.pos);
-  x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos) + external_force;
-  x_ddot *= stick_->getWeight() * stick_->getHeight() / (stick_->getWeight() + platform_->getWeight());
+  float x_ddot = - diff_theta_.acc * std::cos(diff_theta_.pos);
+  x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos);
+  x_ddot *= stick_->getWeight() * stick_->getHeight() / 3.f;
+  x_ddot += external_force - MU_TRANS * diff_x_.vel;
+  x_ddot /= (stick_->getWeight() / 3.f + platform_->getWeight());
 
   // update new values
   diff_x_ = {x_ddot,

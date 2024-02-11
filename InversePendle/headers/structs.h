@@ -6,6 +6,8 @@
 #define INVERSEPENDLE__STRUCTS_H_
 
 #define G 98.1f
+#define MU_ROT 1.f
+#define MU_TRANS 0.001f
 
 struct Orientation {
   float x = 0.f;
