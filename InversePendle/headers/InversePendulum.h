@@ -12,6 +12,7 @@
 
 #include "Stick.h"
 #include "Platform.h"
+#include "SlidingMode.h"
 
 class InversePendulum {
  public:
@@ -24,6 +25,7 @@ class InversePendulum {
   Differentials diff_x_;
   Orientation platform_orientation_;
   Orientation stick_orientation_;
+  std::shared_ptr<Controller> controller_;
 };
 
 #endif //INVERSEPENDLE__INVERSEPENDULUM_H_

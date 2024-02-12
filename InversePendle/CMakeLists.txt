@@ -13,4 +13,4 @@ add_executable(InversePendle src/main.cpp src/Simulator.cpp headers/Simulator.h 
 
 target_link_libraries(InversePendle PRIVATE sfml-graphics sfml-window ${Boost_LIBRARIES})
 
-add_compile_definitions(EXT_FORCE=1; DEBUG=1)
+add_compile_definitions(EXT_FORCE=1; DEBUG=1; SLIDING_MODE=1)

@@ -8,7 +8,10 @@
 #include "Controller.h"
 
 class SlidingMode : public Controller {
-  float feedbackControl(float x, float theta) override;
+ public:
+  SlidingMode(float mass_platform, float mass_stick, float length_stick);
+  float feedbackControl(Differentials diff_x, Differentials diff_theta) override;
+ private:
 };
 
 #endif //INVERSEPENDLE_HEADERS_SLIDINGMODE_H_
