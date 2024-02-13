@@ -22,19 +22,22 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
 }
 
 std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, float external_force) {
-
-
-
+  float controller_force = 0;
+#if SLIDING_MODE
+  controller_force = controller_->feedbackControl(diff_x_, diff_theta_);
+  std::cout << controller_force << "\n";
+#endif
   // TODO fix trans friction & weights for friction (should not depend on dimensions of the system?)
   // calculate new values
-  float theta_ddot = (diff_x_.acc * std::cos(diff_theta_.pos) + 3.f * G * std::sin(diff_theta_.pos) -
-      MU_ROT * diff_theta_.vel);
+  float theta_ddot = (- diff_x_.acc * std::cos(diff_theta_.pos) + 3.f * G * std::sin(diff_theta_.pos) -
+      MU_ROT * G *  diff_theta_.vel / 6.f);
   theta_ddot /= stick_->getHeight();
 
   float x_ddot = -diff_theta_.acc * std::cos(diff_theta_.pos);
   x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos);
   x_ddot *= stick_->getWeight() * stick_->getHeight() / 3.f;
-  x_ddot += external_force - MU_TRANS * diff_x_.vel;
+  x_ddot += external_force - MU_TRANS * platform_->getWeight() * G * diff_x_.vel;
+  //x_ddot += controller_force;
   x_ddot /= (stick_->getWeight() / 3.f + platform_->getWeight());
 
   // update new values

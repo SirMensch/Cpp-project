@@ -48,7 +48,7 @@ bool Simulator::render() {
 
   // draw everything here...
 #if EXT_FORCE
-  float force = 1.f * float(force_direction); // button press is 100 kg*cm/s^2
+  float force = 1000000.f * float(force_direction); // button press is 1e6 N
   for (auto &object : inverse_pendulum_->update(1.f / float(framerate_), force)) {
 #else
     for (auto &object : inverse_pendulum_->update(1.f / float(framerate_))) {

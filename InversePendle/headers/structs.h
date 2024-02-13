@@ -5,9 +5,13 @@
 #ifndef INVERSEPENDLE__STRUCTS_H_
 #define INVERSEPENDLE__STRUCTS_H_
 
+#include <iostream>
+
 #define G 98.1f
-#define MU_ROT 10.f // 1.f
-#define MU_TRANS 10.f // 0.01f
+#define MU_ROT 0.5f
+#define MU_TRANS 0.f //0.01f TODO doesn't work as expected -> lead to energy +
+#define LAMBDA 0.2f
+#define ETA 0.1f
 
 struct Orientation {
   float x = 0.f;
@@ -21,9 +25,19 @@ struct Differentials {
   float pos = 0;
 
   friend std::ostream& operator <<(std::ostream& os, const Differentials& differentials){
-    os << differentials.pos << " " << differentials.vel << " " << differentials.acc << std::endl;
+    os << differentials.pos << " " << differentials.vel << " " << differentials.acc << "\n";
     return os;
   }
+
+  // Overloading the + operator for the struct
+  Differentials operator+(const Differentials& other) const {
+    Differentials result;
+    result.pos = this->pos + other.pos;
+    result.vel = this->vel + other.vel;
+    result.acc = this->acc + other.acc;
+    return result;
+  }
+
 };
 
 #endif //INVERSEPENDLE__STRUCTS_H_

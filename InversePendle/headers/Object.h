@@ -5,7 +5,7 @@
 #ifndef INVERSEPENDLE__OBJECT_H_
 #define INVERSEPENDLE__OBJECT_H_
 
-#define DENSITY 10 // kg/cm^2
+#define DENSITY 1 // kg/cm^2
 
 #include <memory>
 #include "SFML/Graphics/RectangleShape.hpp"
