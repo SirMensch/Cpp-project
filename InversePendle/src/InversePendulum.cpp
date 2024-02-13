@@ -37,7 +37,7 @@ std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, flo
   x_ddot += std::pow(diff_theta_.vel, 2.f) * std::sin(diff_theta_.pos);
   x_ddot *= stick_->getWeight() * stick_->getHeight() / 3.f;
   x_ddot += external_force - MU_TRANS * platform_->getWeight() * G * diff_x_.vel;
-  //x_ddot += controller_force;
+  //x_ddot += 3.f * controller_force;
   x_ddot /= (stick_->getWeight() / 3.f + platform_->getWeight());
 
   // update new values

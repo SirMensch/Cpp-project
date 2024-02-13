@@ -9,7 +9,7 @@
 
 #define G 98.1f
 #define MU_ROT 0.5f
-#define MU_TRANS 0.f //0.01f TODO doesn't work as expected -> lead to energy +
+#define MU_TRANS 0.01f
 #define LAMBDA 0.2f
 #define ETA 0.1f
 

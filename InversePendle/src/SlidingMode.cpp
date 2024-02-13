@@ -6,8 +6,8 @@
 
 float SlidingMode::feedbackControl(Differentials diff_x, Differentials diff_theta) {
 
-  diff_theta = diff_theta + Differentials{getRandomNumber(0.01), getRandomNumber(0.01), getRandomNumber(0.01)};
-  diff_x = diff_x + Differentials{getRandomNumber(), getRandomNumber(), getRandomNumber()};
+  //diff_theta = diff_theta + Differentials{getRandomNumber(0.01), getRandomNumber(0.01), getRandomNumber(0.01)};
+  //diff_x = diff_x + Differentials{getRandomNumber(), getRandomNumber(), getRandomNumber()};
 
   // implement Sliding Mode
 
@@ -15,7 +15,7 @@ float SlidingMode::feedbackControl(Differentials diff_x, Differentials diff_thet
       ( diff_theta.acc * std::cos(diff_theta.pos) -
       std::pow(diff_theta.vel,2.f) * std::sin(diff_theta.pos) );
   f_t += MU_TRANS * mass_platform_ * G * diff_x.vel + MU_ROT * mass_stick_ * G * diff_theta.vel;
-  f_t -= 1 / length_stick_ * (3.f * G * std::sin(diff_theta.pos) + diff_x.vel * std::cos(diff_theta.pos));
+  f_t += 1 / length_stick_ * (- 3.f * G * std::sin(diff_theta.pos) + diff_x.vel * std::cos(diff_theta.pos));
   f_t -= LAMBDA * (diff_theta.vel + diff_x.vel);
   // f_t += uncertainties * ETA
   return f_t;
