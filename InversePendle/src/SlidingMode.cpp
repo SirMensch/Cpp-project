@@ -14,10 +14,10 @@ float SlidingMode::feedbackControl(Differentials diff_x, Differentials diff_thet
   float f_t = mass_stick_ * length_stick_ / 3.f * (diff_theta.acc * std::cos(diff_theta.pos) -
       std::pow(diff_theta.vel, 2.f) * std::sin(diff_theta.pos));
   f_t += MU_TRANS * mass_platform_ * G * diff_x.vel;
-  f_t += MU_ROT * G * diff_theta.vel / (6.f * length_stick_) * (mass_platform_ + mass_stick_ / 3.f);
-  f_t += (mass_platform_ + mass_stick_ / 3.f) / length_stick_
+  f_t += THETA_X_FACTOR * MU_ROT * G * diff_theta.vel / (6.f * length_stick_) * (mass_platform_ + mass_stick_ / 3.f);
+  f_t += THETA_X_FACTOR * (mass_platform_ + mass_stick_ / 3.f) / length_stick_
       * (-3.f * G * std::sin(diff_theta.pos) + diff_x.acc * std::cos(diff_theta.pos));
-  f_t -= LAMBDA * (diff_theta.vel + diff_x.vel) * (mass_platform_ + mass_stick_ / 3.f); //desired x
+  f_t -= LAMBDA * (THETA_X_FACTOR * diff_theta.vel + diff_x.vel) * (mass_platform_ + mass_stick_ / 3.f); //desired x
   // f_t += uncertainties * ETA
   return f_t;
 }

@@ -5,12 +5,11 @@
 #include "Stick.h"
 
 bool Stick::updatePosition(Orientation orientation) {
-  // TODO use boolean of this function & fix offset in connection
+  // TODO use boolean of this function
   try {
-    Object::getRectangle()->setPosition(orientation.x
-                                            - getWidth() / 2 * std::cos(orientation.angle / 180.f * float(M_PI)),
-                                        orientation.y
-                                            - getWidth() / 2 * std::sin(orientation.angle / 180.f * float(M_PI)));
+    float ori_x = orientation.x - getWidth() / 2 * std::cos(orientation.angle / 180.f * float(M_PI));
+    float ori_y = orientation.y - getWidth() / 2 * std::sin(orientation.angle / 180.f * float(M_PI));
+    Object::getRectangle()->setPosition(ori_x, ori_y);
     Object::getRectangle()->setRotation(orientation.angle);
   } catch (...) {
     return false;

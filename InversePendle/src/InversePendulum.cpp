@@ -61,8 +61,11 @@ std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, flo
 #endif
 
   //update objects
-  stick_->updatePosition(stick_orientation_);
-  platform_->updatePosition(platform_orientation_);
+  bool success = stick_->updatePosition(stick_orientation_);
+  success &= platform_->updatePosition(platform_orientation_);
+  if (!success){
+    throw std::runtime_error("Update of Stick or Platform failed!");
+  }
   // give objects to simulator
   std::list<std::shared_ptr<Object>> object_list;
   object_list.push_back(stick_);

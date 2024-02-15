@@ -12,6 +12,7 @@
 #define MU_TRANS 0.01f
 #define LAMBDA 0.2f
 #define ETA 0.1f
+#define THETA_X_FACTOR 100.f
 
 struct Orientation {
   float x = 0.f;
