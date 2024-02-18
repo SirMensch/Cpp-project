@@ -69,3 +69,38 @@ Final equations are:
 $$\ddot{x} = \frac{1}{m_p + m_s} \big( \frac{1}{2} m_s l (\dot \phi^2 \sin \phi - \ddot \phi \cos \phi) - b_p \dot x \big)$$
 
 $$\ddot \phi = \frac{3}{l} \big( \frac{1}{2}(g \sin \phi -  \ddot{x} \cos \phi)  - \frac{b_s}{m_s l} \dot \phi \big)$$
+
+Now we derive the transfer functions for the linearized system around $`x = 400`$ and $`\phi = 0`$. 
+
+The friction of the stick can be ignored, because we don't want high angular velocities $`\frac{b_s}{m_s l} \dot \phi = 0`$:
+
+$$ (m_p + m_s) \ddot{x} = - \frac{1}{2} m_s l \ddot \phi - b_p \dot x + F(s)$$
+
+$$\frac{l}{3} \ddot \phi + \frac{1}{2} \ddot{x} - \frac{g}{2} \phi = 0$$
+
+Now we split $`x`$ and $`\phi`$:
+
+$$ \Phi(s) = - \frac{1}{2} \frac{s^2}{\frac{l}{3} s^2 - \frac{g}{2}} X(s)$$
+
+Then we insert this equation into the other one:
+
+$$\big( (m_p + m_s) s^2 + b_p s \big) X(s) + \frac{1}{2} m_s l s^2 \Phi(s) = F(s)$$
+
+$$\big( (m_p + m_s) s^2 + b_p s \big) X(s) - \frac{1}{4} m_s l s^2 \frac{s^2}{\frac{l}{3} s^2 - \frac{g}{2}} X(s) = F(s)$$
+
+$$ (\frac{l}{3} s^2 - \frac{g}{2}) \big( (m_p + m_s) s^2 + b_p s \big) X(s) - \frac{1}{4} m_s l s^4 X(s) = (\frac{l}{3} s^2 - \frac{g}{2}) F(s)$$
+
+$$(\frac{l(m_p+\frac{m_s}{4})}{3}s^4 + \frac{l}{3} b_p s^3 - \frac{g}{2}(m_p + m_s) s^2 - \frac{g}{2} b_p s) X(s) = (\frac{l}{3} s^2 - \frac{g}{2}) F(s)$$
+
+$$\frac{X(s)}{F(s)} = \frac{l s^2 - \frac{3g}{2}}{l(m_p+\frac{m_s}{4})s^4 + b_p s^3 - \frac{3g}{2}(m_p + m_s) s^2 - \frac{3g}{2} b_p s}$$
+
+For $`P_s(s)`$, we insert this equation:
+
+$$\frac{\Phi(s)}{F(s)} = \frac{-\frac{3}{2}s}{l(m_p+\frac{m_s}{4})s^3 + b_p s^2 - \frac{3g}{2}(m_p + m_s) s^1 - \frac{3g}{2} b_p}$$
+
+# PID
+
+The formula for our PID looks like this:
+
+$$ \frac{F(s)}{\phi(s)} = K_c + \frac{K_i}{s} + K_d s$$
+
