@@ -12,7 +12,13 @@
 
 #include "Stick.h"
 #include "Platform.h"
+#if C_SLIDING_MODE
 #include "SlidingMode.h"
+#elif C_PID
+#include "PID.h"
+#elif
+#include TODO
+#endif
 
 class InversePendulum {
  public:

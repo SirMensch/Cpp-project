@@ -12,7 +12,7 @@
 #define MU_TRANS 0.01f
 #define LAMBDA 0.2f
 #define ETA 0.1f
-#define THETA_X_FACTOR 100.f
+#define THETA_X_FACTOR 50.f
 
 struct Orientation {
   float x = 0.f;
@@ -40,5 +40,11 @@ struct Differentials {
   }
 
 };
+
+template <typename T>
+float sgn(T val) {
+  return (T(0) < val) - (val < T(0));
+}
+
 
 #endif //INVERSEPENDLE__STRUCTS_H_

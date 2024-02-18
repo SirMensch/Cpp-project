@@ -14,8 +14,12 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
   diff_x_ = {0, 0, platform_orientation_.x};
   diff_theta_ = {0, 0, float((stick_orientation_.angle - 180.f) / 180.f * M_PI)};
 
-#if SLIDING_MODE
+#if C_SLIDING_MODE
   controller_ = std::make_shared<SlidingMode>(platform_->getWeight(), stick_->getWeight(), stick_->getHeight());
+#elif C_PID
+  controller_  = std::make_shared<PID>(platform_->getWeight(), stick_->getWeight(), stick_->getHeight());
+#elif C_LQR
+  controller_;
 #else
   controller_ = nullptr;
 #endif
@@ -23,14 +27,13 @@ InversePendulum::InversePendulum(float platform_width, float platform_height, fl
 
 std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, float external_force) {
   float controller_force = 0;
-#if SLIDING_MODE
-  controller_force = controller_->feedbackControl(diff_x_, diff_theta_);
+#if C_SLIDING_MODE or C_PID
+  controller_force = controller_->feedbackControl(diff_x_, diff_theta_, delta_time);
   std::cout << controller_force << "\n";
 #endif
-  // TODO fix trans friction & weights for friction (should not depend on dimensions of the system?)
   // calculate new values
-  float theta_ddot = (- diff_x_.acc * std::cos(diff_theta_.pos) + 3.f * G * std::sin(diff_theta_.pos) -
-      MU_ROT * G *  diff_theta_.vel / 6.f);
+  float theta_ddot = (-diff_x_.acc * std::cos(diff_theta_.pos) + 3.f * G * std::sin(diff_theta_.pos) -
+      MU_ROT * G * diff_theta_.vel / 6.f);
   theta_ddot /= stick_->getHeight();
 
   float x_ddot = -diff_theta_.acc * std::cos(diff_theta_.pos);
@@ -63,7 +66,7 @@ std::list<std::shared_ptr<Object>> InversePendulum::update(float delta_time, flo
   //update objects
   bool success = stick_->updatePosition(stick_orientation_);
   success &= platform_->updatePosition(platform_orientation_);
-  if (!success){
+  if (!success) {
     throw std::runtime_error("Update of Stick or Platform failed!");
   }
   // give objects to simulator

@@ -18,7 +18,7 @@ class Controller {
  * @param theta angle of the stick
  * @return acceleration in x for the motor of the platform
  */
-  virtual float feedbackControl(Differentials diff_x, Differentials diff_theta) = 0;
+  virtual float feedbackControl(Differentials diff_x, Differentials diff_theta, float delta_time) = 0;
   float getRandomNumber(float std_dev = 1.f);
  private:
   std::normal_distribution<float> gaussian_;

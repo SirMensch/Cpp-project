@@ -10,7 +10,7 @@
 class SlidingMode : public Controller {
  public:
   SlidingMode(float mass_platform, float mass_stick, float length_stick);
-  float feedbackControl(Differentials diff_x, Differentials diff_theta) override;
+  float feedbackControl(Differentials diff_x, Differentials diff_theta, float delta_time) override;
  private:
 };
 
