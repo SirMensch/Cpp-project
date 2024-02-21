@@ -104,3 +104,8 @@ The formula for our PID looks like this:
 
 $$ \frac{F(s)}{\phi(s)} = K_c + \frac{K_i}{s} + K_d s$$
 
+Using Matlab we get a stable configuration for $`\phi`$ by setting the parameters to:
+
+$$K_c = 50, K_i = 1, K_d = 1$$
+
+But x?
