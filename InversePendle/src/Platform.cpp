@@ -6,7 +6,7 @@
 bool Platform::updatePosition(Orientation orientation) {
   // TODO check for the return value
   try {
-    Object::getRectangle()->setPosition(orientation.x, orientation.y);
+    Object::getRectangle()->setPosition(CM_TO_M * orientation.x, CM_TO_M * orientation.y);
   } catch (...) {
     return false;
   }

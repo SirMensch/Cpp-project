@@ -3,9 +3,10 @@
 //
 
 #include "PID.h"
-PID::PID(float mass_platform, float mass_stick, float length_stick) : Controller(mass_platform,
-                                                                                 mass_stick,
-                                                                                 length_stick), p_(100), i_(1), d_(1) {}
+PID::PID(float k_proportional, float k_integral, float k_differential) : Controller(0, 0, 0),
+                                                                         p_(k_proportional),
+                                                                         i_(k_integral),
+                                                                         d_(k_differential) {}
 
 float PID::feedbackControl(Differentials diff_x, Differentials diff_theta, float delta_time) {
   static float integrative_part = 0;

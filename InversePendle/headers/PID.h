@@ -10,7 +10,7 @@
 class
 PID : public Controller {
  public:
-  PID(float mass_platform, float mass_stick, float length_stick);
+  PID(float k_proportional, float k_integral, float k_differential);
   float feedbackControl(Differentials diff_x, Differentials diff_theta, float delta_time) override;
  private:
   const float p_;

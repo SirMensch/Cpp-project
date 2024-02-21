@@ -5,7 +5,7 @@
 #ifndef INVERSEPENDLE__OBJECT_H_
 #define INVERSEPENDLE__OBJECT_H_
 
-#define DENSITY 1 // kg/cm^2
+#define DENSITY 10 // kg/m^2
 
 #include <memory>
 #include "SFML/Graphics/RectangleShape.hpp"
@@ -26,7 +26,7 @@ class Object {
  private:
   // variables
   std::shared_ptr<sf::RectangleShape> rectangle;
-  float weight_ = 0;
+  float weight_ = 0; // in kg
 };
 
 #endif // INVERSEPENDLE__OBJECT_H_

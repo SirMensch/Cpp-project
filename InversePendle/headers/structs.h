@@ -7,12 +7,13 @@
 
 #include <iostream>
 
-#define G 98.1f
-#define MU_ROT 0.5f
+#define G 9.81f
+#define MU_ROT 0.01f
 #define MU_TRANS 0.01f
 #define LAMBDA 0.2f
 #define ETA 0.1f
 #define THETA_X_FACTOR 50.f
+#define CM_TO_M 100
 
 struct Orientation {
   float x = 0.f;

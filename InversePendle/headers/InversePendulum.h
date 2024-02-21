@@ -23,7 +23,7 @@
 class InversePendulum {
  public:
   InversePendulum(float platform_width, float platform_height, float stick_width, float stick_height);
-  std::list<std::shared_ptr<Object>> update(float delta_time, float force = 0.f);
+  std::list<std::shared_ptr<Object>> update(float delta_time, float force = 0.f, int sim_steps = 1);
  private:
   std::shared_ptr<Stick> stick_;
   std::shared_ptr<Platform> platform_;

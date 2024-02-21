@@ -5,9 +5,9 @@
 #include "Object.h"
 
 Object::Object(float width, float height, Orientation orientation) {
-  rectangle = std::make_shared<sf::RectangleShape>(sf::Vector2f(width, height));
+  rectangle = std::make_shared<sf::RectangleShape>(sf::Vector2f(CM_TO_M * width, CM_TO_M * height));
   weight_ = DENSITY * width * height;
-  rectangle->setPosition(orientation.x, orientation.y);
+  rectangle->setPosition(CM_TO_M * orientation.x,CM_TO_M * orientation.y);
   rectangle->setRotation(orientation.angle);
 }
 std::shared_ptr<sf::RectangleShape> Object::getRectangle() {
@@ -17,8 +17,8 @@ float Object::getWeight() const {
   return weight_;
 }
 float Object::getHeight() const {
-  return rectangle->getSize().y;
+  return rectangle->getSize().y / CM_TO_M;
 }
 float Object::getWidth() const {
-  return rectangle->getSize().x;
+  return rectangle->getSize().x / CM_TO_M;
 }
