@@ -122,11 +122,11 @@ We put the second equation into the first one:
 
 $$ (m_p + m_s) \ddot{x} = - \frac{1}{2} m_s (- \frac{3}{2} \ddot{x} + \frac{3g}{2} \phi) - b_p \dot x + F(s)$$
 
-$$ (m_p + \frac{1}{4}m_s) \ddot{x} = \frac{3gm_s}{4} \phi - b_p \dot x + F(s)$$
+$$ (m_p + \frac{1}{4}m_s) \ddot{x} = - \frac{3gm_s}{4} \phi - b_p \dot x + F(s)$$
 
-$$\ddot{x} = \frac{1}{(m_p + \frac{1}{4}m_s)}\big(\frac{3gm_s}{4} \phi - b_p \dot x + F(s)\big)$$
+$$\ddot{x} = \frac{1}{(m_p + \frac{1}{4}m_s)}\big(-\frac{3gm_s}{4} \phi - b_p \dot x + F(s)\big)$$
 
-Now we are only missing the equation for $`\ddot\phi`$
+Now we are only missing the equation for $`\ddot\phi`$.
 
 $$\ddot \phi = - \frac{3}{2l} \frac{1}{(m_p + m_s)}\big(- \frac{1}{2} m_s l \ddot \phi - b_p \dot x + F(s)\big) + \frac{3g}{2l} \phi$$
 
@@ -134,4 +134,50 @@ $$\big(1 - \frac{3m_s}{4(m_p+m_s)} \big)  \ddot \phi = \frac{3b_p}{2l(m_p+m_s)} 
 
 $$\ddot \phi  = \frac{3b_p}{2l(m_p + \frac{1}{4}m_s)} \dot x + \frac{m_p+m_s}{m_p + \frac{1}{4}m_s}\frac{3g}{2l} \phi - \frac{3}{2l(m_p + \frac{1}{4}m_s)}F(s) $$
 
-So if we now add all together my $`\italic{x}`$
+The steady state equations are:
+
+$$\dot{\mathsf{x}} = A \mathsf{x} + Bu$$ 
+
+
+
+$$  \mathsf{y} = C \mathsf{x} + Du$$
+
+So if we now add all together my $`\mathsf{x}`$ will be:
+
+$$\mathsf{x} = 
+\begin{bmatrix} 
+x \\ 
+\dot x \\ 
+\phi \\ 
+\dot \phi 
+\end{bmatrix}$$
+
+$$A = \frac{1}{(m_p + \frac{1}{4}m_s)}
+\begin{bmatrix}
+    0 & 1 & 0 & 0 \\
+    0 & - b_p & -\frac{3gm_s}{4} & 0 \\
+    0 & 0 & 0 & 1 \\
+    0 & \frac{3b_p}{2l} & \frac{3g(m_p+m_s)}{2l} & 0 \\
+\end{bmatrix}
+$$ 
+
+$$ B = \frac{1}{(m_p + \frac{1}{4}m_s)}
+\begin{bmatrix}
+0 \\
+1 \\
+0 \\
+-\frac{3}{2l} \\
+\end{bmatrix}
+$$
+
+$$
+C = 
+\begin{bmatrix}
+ 1 & 0 & 0 & 0 \\
+ 0 & 0 & 1 & 0 \\
+\end{bmatrix}
+$$
+
+$$D = [0,0]^T$$
+
+So now we have your steady state model and ...
