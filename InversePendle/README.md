@@ -104,8 +104,34 @@ The formula for our PID looks like this:
 
 $$ \frac{F(s)}{\phi(s)} = K_c + \frac{K_i}{s} + K_d s$$
 
-Using Matlab we get a stable configuration for $`\phi`$ by setting the parameters to:
+When we our zeros to $`z = [-3, -4]`$ and our pole to $`p = 0`$, then we get by using Matlab we get:
 
-$$K_c = 50, K_i = 1, K_d = 1$$
+$$K_c = 210, K_i = 360, K_d = 30$$
 
-But x?
+Caution: $`x`$ is not stable with this controller.
+
+# PQL
+
+For the PQL we transform our model to a state-space model.
+
+$$ (m_p + m_s) \ddot{x} = - \frac{1}{2} m_s l \ddot \phi - b_p \dot x + F(s)$$
+
+$$\ddot \phi = - \frac{3}{2l} \ddot{x} + \frac{3g}{2l} \phi$$
+
+We put the second equation into the first one:
+
+$$ (m_p + m_s) \ddot{x} = - \frac{1}{2} m_s (- \frac{3}{2} \ddot{x} + \frac{3g}{2} \phi) - b_p \dot x + F(s)$$
+
+$$ (m_p + \frac{1}{4}m_s) \ddot{x} = \frac{3gm_s}{4} \phi - b_p \dot x + F(s)$$
+
+$$\ddot{x} = \frac{1}{(m_p + \frac{1}{4}m_s)}\big(\frac{3gm_s}{4} \phi - b_p \dot x + F(s)\big)$$
+
+Now we are only missing the equation for $`\ddot\phi`$
+
+$$\ddot \phi = - \frac{3}{2l} \frac{1}{(m_p + m_s)}\big(- \frac{1}{2} m_s l \ddot \phi - b_p \dot x + F(s)\big) + \frac{3g}{2l} \phi$$
+
+$$\big(1 - \frac{3m_s}{4(m_p+m_s)} \big)  \ddot \phi = \frac{3b_p}{2l(m_p+m_s)} \dot x - \frac{3}{2l(m_p + m_s)}F(s) + \frac{3g}{2l} \phi$$
+
+$$\ddot \phi  = \frac{3b_p}{2l(m_p + \frac{1}{4}m_s)} \dot x + \frac{m_p+m_s}{m_p + \frac{1}{4}m_s}\frac{3g}{2l} \phi - \frac{3}{2l(m_p + \frac{1}{4}m_s)}F(s) $$
+
+So if we now add all together my $`\italic{x}`$
