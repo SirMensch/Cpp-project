@@ -15,9 +15,11 @@
 ## Tools to learn
 
 - **CMake** (project builds, `FetchContent` or `find_package`)
-- **Vcpkg or Conan** (C++ dependency management)
+- **Vcpkg** (C++ dependency management)
 - **AddressSanitizer (ASan)** (memory safety verification)
 
 ### Prerequisites
 
 - need a `VCPKG_ROOT`-path defined
+
+## Progess & Challenges

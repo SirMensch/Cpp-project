@@ -36,6 +36,7 @@ file(GLOB_RECURSE SRC_FILES
     "src/simulation/*.cpp"
     "src/planners/*.cpp"
     "src/visualization/*.cpp"
+    "src/planners/*.cpp"
 )
 
 # 2. Gather all test files

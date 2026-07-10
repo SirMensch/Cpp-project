@@ -1,4 +1,9 @@
 #include "visualizer.hpp"
+#include "planners/path_planner.hpp"
+#include "polyscope/curve_network.h"
+#include "polyscope/point_cloud.h"
+#include "polyscope/surface_mesh.h"
+#include <vector>
 
 namespace visualization {
 
@@ -162,6 +167,21 @@ void drawEnvironment(const simulation::Environment &env) {
     // Give obstacles a distinct color (e.g., dark gray/slate red)
     ps_mesh->setSurfaceColor({0.4, 0.4, 0.45});
   }
+}
+
+void drawPlannedPath(const std::string &name, const simulation::Path &path) {
+  if (path.empty())
+    return;
+
+  std::vector<std::vector<size_t>> edges;
+  for (size_t i = 0; i < path.size() - 1; ++i) {
+    edges.push_back({i, i + 1});
+  }
+
+  auto *ps_path = polyscope::registerCurveNetwork(name, path, edges);
+  ps_path->setColor({1.0, 0.5, 0.0}); // Keep the vibrant orange
+  ps_path->setRadius(0.005);
+  ps_path->setMaterial("flat");
 }
 
 } // namespace visualization
