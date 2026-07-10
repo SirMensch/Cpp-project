@@ -1,0 +1,25 @@
+{
+    "version": 3,
+    "configurePresets": [
+        {
+            "name": "default",
+            "displayName": "Default Config",
+            "description": "Fedora GCC build with vcpkg integration",
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug",
+                "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake",
+                "VCPKG_MANIFEST_MODE": "ON"
+            }
+        },
+        {
+            "name": "standard",
+            "description": "",
+            "displayName": "",
+            "inherits": [
+                "default"
+            ]
+        }
+    ]
+}

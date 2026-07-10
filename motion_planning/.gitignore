@@ -1,0 +1,52 @@
+# ==========================================
+# CMake & Build Artifacts
+# ==========================================
+build/
+.cmake/
+
+# ==========================================
+# vcpkg Dependency Manager
+# ==========================================
+# Ignore the local packages downloaded and built by vcpkg manifest mode
+vcpkg_installed/
+vcpkg-downloads/
+
+# ==========================================
+# IDE & Text Editors
+# ==========================================
+# VS Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/c_cpp_properties.json
+
+# ==========================================
+# UI State Layouts (Polyscope / ImGui)
+# ==========================================
+imgui.ini
+.polyscope.ini
+
+# CLion / JetBrains
+.idea/
+
+# QtCreator
+*.user
+
+# Backup & swap files
+*.swp
+*~
+
+# ==========================================
+# Compiled Binaries & Object Files
+# ==========================================
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.dylib
+*.dll
+*.exe
+*.out

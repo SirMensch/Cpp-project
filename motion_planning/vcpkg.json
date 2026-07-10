@@ -1,0 +1,9 @@
+{
+  "name": "motion-planning-sandbox",
+  "version-string": "0.1.0",
+  "dependencies": [
+    "eigen3",
+    "fcl",
+    "catch2"
+  ]
+} 
