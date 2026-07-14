@@ -18,7 +18,7 @@
 struct Orientation {
   float x = 0.f;
   float y = 0.f;
-  float angle = 0.f;
+  float angle = 0.f; // 0 .. 2pi
 };
 
 struct Differentials {
@@ -26,26 +26,23 @@ struct Differentials {
   float vel = 0;
   float pos = 0;
 
-  friend std::ostream& operator <<(std::ostream& os, const Differentials& differentials){
-    os << differentials.pos << " " << differentials.vel << " " << differentials.acc << "\n";
+  friend std::ostream &operator<<(std::ostream &os,
+                                  const Differentials &differentials) {
+    os << differentials.pos << " " << differentials.vel << " "
+       << differentials.acc << "\n";
     return os;
   }
 
   // Overloading the + operator for the struct
-  Differentials operator+(const Differentials& other) const {
+  Differentials operator+(const Differentials &other) const {
     Differentials result;
     result.pos = this->pos + other.pos;
     result.vel = this->vel + other.vel;
     result.acc = this->acc + other.acc;
     return result;
   }
-
 };
 
-template <typename T>
-float sgn(T val) {
-  return (T(0) < val) - (val < T(0));
-}
+template <typename T> float sgn(T val) { return (T(0) < val) - (val < T(0)); }
 
-
-#endif //INVERSEPENDLE__STRUCTS_H_
+#endif // INVERSEPENDLE__STRUCTS_H_

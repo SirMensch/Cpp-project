@@ -3,18 +3,25 @@
 //
 
 #include "Stick.h"
+#include <SFML/System/Vector2.hpp>
 
 bool Stick::updatePosition(Orientation orientation) {
   // TODO use boolean of this function
   try {
-    float ori_x = orientation.x - getWidth() / 2 * std::cos(orientation.angle / 180.f * float(M_PI));
-    float ori_y = orientation.y - getWidth() / 2 * std::sin(orientation.angle / 180.f * float(M_PI));
-    Object::getRectangle()->setPosition(CM_TO_M * ori_x, CM_TO_M * ori_y);
-    Object::getRectangle()->setRotation(orientation.angle);
+    float ori_x =
+        orientation.x -
+        getWidth() / 2 * std::cos(orientation.angle / 180.f * float(M_PI));
+    float ori_y =
+        orientation.y -
+        getWidth() / 2 * std::sin(orientation.angle / 180.f * float(M_PI));
+    Object::getRectangle()->setPosition(
+        sf::Vector2f(CM_TO_M * ori_x, CM_TO_M * ori_y));
+    Object::getRectangle()->setRotation(sf::degrees(orientation.angle));
   } catch (...) {
     return false;
   }
   return true;
 }
 
-Stick::Stick(float width, float height, Orientation orientation) : Object(width, height, orientation) {}
+Stick::Stick(float width, float height, Orientation orientation)
+    : Object(width, height, orientation) {}

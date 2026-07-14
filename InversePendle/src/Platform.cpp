@@ -6,12 +6,14 @@
 bool Platform::updatePosition(Orientation orientation) {
   // TODO check for the return value
   try {
-    Object::getRectangle()->setPosition(CM_TO_M * orientation.x, CM_TO_M * orientation.y);
+    Object::getRectangle()->setPosition(
+        sf::Vector2f(CM_TO_M * orientation.x, CM_TO_M * orientation.y));
   } catch (...) {
     return false;
   }
   return true;
 }
-Platform::Platform(float width, float height, Orientation orientation) : Object(width, height, orientation) {
+Platform::Platform(float width, float height, Orientation orientation)
+    : Object(width, height, orientation) {
   Object::getRectangle()->setFillColor(sf::Color::Blue);
 }
