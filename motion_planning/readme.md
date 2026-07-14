@@ -23,3 +23,7 @@
 - need a `VCPKG_ROOT`-path defined
 
 ## Progess & Challenges
+
+Currently we have a working version with breadth first search. It looks like this:
+
+![](docs/pictures/screenshot_bfs.png)
