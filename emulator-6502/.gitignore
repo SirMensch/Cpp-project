@@ -1,0 +1,50 @@
+# Build directories (where CMake outputs everything)
+build/
+.gradle/
+out/
+
+# Compiled Object files
+*.o
+*.obj
+*.co
+*.gch
+*.pch
+
+# Compiled Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.dylib
+*.so
+
+# Executables
+*.exe
+*.out
+*.app
+
+# IDE - VS Code
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# IDE - CLion / IntelliJ
+.idea/
+cmake-build-*/
+
+# IDE - Visual Studio
+.vs/
+*.user
+*.suo
+*.sln
+
+# CMake system files (if you accidentally run cmake in the root)
+CMakeFiles/
+CMakeCache.txt
+CMakeSettings.json
+CMakeUserPresets.json
+Makefile
+cmake_install.cmake
