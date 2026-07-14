@@ -5,8 +5,11 @@
 namespace simulation {
 
 Car::Car(double x, double y, double phi, double length, double width) {
-  position_front_ << x + length / 2.0, y, phi;
-  position_back_ << x - length / 2.0, y, phi;
+  Eigen::Vector2d position_center = {x, y};
+  position_front_ << x + cos(phi) * length / 2.0, y + sin(phi) * length / 2.0,
+      phi;
+  position_back_ << x - cos(phi) * length / 2.0, y - sin(phi) * length / 2.0,
+      phi;
   size_ << length, width;
 
   auto car_shape = std::make_shared<fcl::Box<double>>(length, width, 1.0);
@@ -15,7 +18,6 @@ Car::Car(double x, double y, double phi, double length, double width) {
   Eigen::Matrix3d rotation =
       Eigen::AngleAxisd(phi, Eigen::Vector3d::UnitZ()).toRotationMatrix();
 
-  // Fix: Use standard fcl::CollisionObject<double> instead of CollisionObjectd
   collision_object_ = std::make_shared<fcl::CollisionObject<double>>(
       car_shape, rotation, translation);
 
@@ -23,7 +25,6 @@ Car::Car(double x, double y, double phi, double length, double width) {
   // Debug Prints
   // -------------------------------------------------------------------------
 
-  // 1. Standard Console Output (Will show up in your terminal window)
   std::cout << "[DEBUG] Car Created Successfully\n"
             << "  -> Target Pos (x, y, phi): (" << x << ", " << y << ", " << phi
             << ")\n"
@@ -32,7 +33,6 @@ Car::Car(double x, double y, double phi, double length, double width) {
             << "  -> Yaw Matrix Angle (deg): " << (phi * 180.0 / M_PI) << "°\n"
             << std::endl;
 
-  // 2. Polyscope UI Logging (Will print inside the running 3D window overlay!)
   if (polyscope::state::initialized) {
     polyscope::info("Car constructed at (" + std::to_string(x) + ", " +
                     std::to_string(y) + ")");
@@ -40,13 +40,11 @@ Car::Car(double x, double y, double phi, double length, double width) {
 }
 
 void Car::step(double d_phi, double dt) {
-  // Track frames locally to avoid flooding the terminal
   static int debug_frame_counter = 0;
   debug_frame_counter++;
 
   double phi = position_back_(2) + d_phi;
 
-  // update front axis
   position_front_(0) = position_front_(0) + velocity(0) * dt * cos(phi);
   position_front_(1) = position_front_(1) + velocity(0) * dt * sin(phi);
   position_front_(2) = phi;
