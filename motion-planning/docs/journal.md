@@ -20,3 +20,7 @@
 
 - fixed problem with "physics", `y-axis` is up in `polyscope`, bit weird to me but okay
 - implement simple `BFS` algorithm and visualize it
+
+## 7/14
+
+- update build config to local instead of repo
