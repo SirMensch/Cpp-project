@@ -16,10 +16,15 @@ enum class OPC {
 };
 
 enum class ALU {
-  LD = 0x0,  // load reg into reg
-  OR = 0x1,  // bitwise or
-  AND = 0x2, // bitwise and
-  XOR = 0x3, // bitwise xor
+  LD = 0x0,   // load reg into reg
+  OR = 0x1,   // bitwise or
+  AND = 0x2,  // bitwise and
+  XOR = 0x3,  // bitwise xor
+  ADD = 0x4,  // add with carry
+  SUB = 0x5,  // subtract
+  SHR = 0x6,  // shift right
+  SUBN = 0x7, // reverse substract
+  SHL = 0xE   // shif left
 };
 
 struct Instruction {
@@ -57,6 +62,9 @@ private:
   uint8_t stack_pointer_{STACK_POINTER_START};
 
   Instruction instruction_ = Instruction(0x0);
+
+  uint8_t &status_reg() { return registers_[0xF]; }
+
   void get_next_instruction();
   void execute_sys();
   void execute_cls(); // TODO

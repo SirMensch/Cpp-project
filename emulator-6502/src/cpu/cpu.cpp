@@ -166,6 +166,26 @@ void CPU::execute_alu() {
     registers_[x] ^= registers_[y];
     break;
   }
+  case ALU::ADD: {
+    uint16_t sum = static_cast<uint16_t>(registers_[x]) +
+                   static_cast<uint16_t>(registers_[y]);
+    uint8_t flag = (sum >> 8) ? 1 : 0;
+    registers_[x] = static_cast<uint8_t>(sum & 0xFF);
+    status_reg() = flag;
+    break;
+  }
+  case ALU::SUB: {
+    uint8_t flag = (registers_[x] < registers_[y]) ? 0 : 1;
+    registers_[x] -= registers_[y];
+    status_reg() = flag;
+    break;
+  }
+  case ALU::SUBN: {
+    uint8_t flag = (registers_[x] > registers_[y]) ? 0 : 1;
+    registers_[x] = registers_[y] - registers_[x];
+    status_reg() = flag;
+    break;
+  }
   default:
     break;
   }
