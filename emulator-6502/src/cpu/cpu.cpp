@@ -3,19 +3,6 @@
 #include <stdexcept>
 #include <sys/types.h>
 
-template <uint8_t start, uint8_t length, typename T> T extract_bits(T input) {
-  // compile time assess
-  constexpr uint8_t type_bits = sizeof(T) * 8;
-  static_assert(std::is_integral<T>::value, "Template type must be an integer");
-  static_assert(start + length <= type_bits, "Length exceeds data type size");
-
-  if (start >= type_bits || length == 0) {
-    return 0;
-  }
-  T mask = (static_cast<T>(1) << length) - 1;
-  return (input >> start) & mask;
-}
-
 CPU::CPU() { reset(); }
 
 void CPU::reset() {
@@ -95,6 +82,14 @@ void CPU::execute_instruction() {
     execute_rnd();
     break;
   }
+  case OPC::DRW: {
+    execute_drw();
+    break;
+  }
+  case OPC::MISC: {
+    execute_misc();
+    break;
+  }
   default:
     break;
   }
@@ -164,8 +159,8 @@ void CPU::execute_skip_not_eq() {
 void CPU::execute_alu() {
   uint8_t x = instruction_.get_x();
   uint8_t y = instruction_.get_y();
-  ALU n = instruction_.get_n();
-  switch (n) {
+  ALU alu = instruction_.get_alu_inst();
+  switch (alu) {
   case ALU::LD: {
     registers_[x] = registers_[y];
     break;
@@ -242,4 +237,70 @@ void CPU::execute_rnd() {
   uint8_t x = instruction_.get_x();
   uint8_t random_byte = static_cast<uint8_t>(dist_(rng_));
   registers_[x] = random_byte & nn;
+}
+
+void CPU::execute_drw() {
+  uint8_t x = instruction_.get_x();
+  uint8_t y = instruction_.get_y();
+  uint8_t n = instruction_.get_n();
+  uint8_t start_col = registers_[x] % DISPLAY_COLS;
+  uint8_t start_row = registers_[y] % DISPLAY_ROWS;
+  status_reg() = 0x0;
+
+  for (uint16_t row = 0; row < n; row++) { // bytes
+    if (start_row + row >= DISPLAY_ROWS) {
+      break;
+    }
+    uint8_t sprite = memory_[index_register_ + row];
+    for (uint16_t col = 0; col < 8; col++) { // bits
+      if (start_col + col >= DISPLAY_COLS) {
+        break;
+      }
+      if (extract_bits(sprite, 7 - col, 0x1)) {
+        uint16_t disp_addr =
+            (start_row + row) * DISPLAY_COLS + (start_col + col);
+        uint8_t current_bit = display_[disp_addr];
+        uint8_t next_bit = current_bit ^ 0x1;
+        display_[disp_addr] = next_bit;
+        if (current_bit) {
+          status_reg() = 0x1;
+        }
+      }
+    }
+  }
+}
+
+void CPU::execute_misc() {
+  uint8_t x = instruction_.get_x();
+  uint16_t nn = instruction_.get_nn();
+  switch (nn) {
+  case 0x07: {
+    registers_[x] = delay_timer_;
+    break;
+  }
+  case 0x15: {
+    delay_timer_ = registers_[x];
+    break;
+  }
+  case 0x18: {
+    sound_timer_ = registers_[x];
+    break;
+  }
+  case 0x1E: {
+    index_register_ += registers_[x];
+    break;
+  }
+  case 0x55: {
+    for (uint8_t i = 0; i <= x; i++) {
+      memory_[index_register_ + i] = registers_[i];
+    }
+    break;
+  }
+  case 0x65: {
+    for (uint8_t i = 0; i <= x; i++) {
+      registers_[i] = memory_[index_register_ + i];
+    }
+    break;
+  }
+  }
 }
