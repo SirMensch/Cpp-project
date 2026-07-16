@@ -79,6 +79,22 @@ void CPU::execute_instruction() {
     execute_alu();
     break;
   }
+  case OPC::SNE_R2R: {
+    execute_sne_r2r();
+    break;
+  }
+  case OPC::LD_I: {
+    execute_ld_i();
+    break;
+  }
+  case OPC::JP_V0: {
+    execute_jp_v0();
+    break;
+  }
+  case OPC::RND: {
+    execute_rnd();
+    break;
+  }
   default:
     break;
   }
@@ -186,7 +202,44 @@ void CPU::execute_alu() {
     status_reg() = flag;
     break;
   }
+  case ALU::SHR: {
+    uint8_t flag = extract_bits<0, 1>(registers_[x]);
+    registers_[x] >>= 0x1;
+    status_reg() = flag;
+    break;
+  }
+  case ALU::SHL: {
+    uint8_t flag = extract_bits<7, 1>(registers_[x]);
+    registers_[x] <<= 0x1;
+    status_reg() = flag;
+    break;
+  }
   default:
     break;
   }
+}
+
+void CPU::execute_sne_r2r() {
+  uint8_t x = instruction_.get_x();
+  uint8_t y = instruction_.get_y();
+  if (registers_[x] != registers_[y]) {
+    program_counter_ += 2;
+  }
+}
+
+void CPU::execute_ld_i() {
+  uint16_t nnn = instruction_.get_nnn();
+  index_register_ = nnn;
+}
+
+void CPU::execute_jp_v0() {
+  uint16_t nnn = instruction_.get_nnn();
+  program_counter_ = nnn + registers_[0];
+}
+
+void CPU::execute_rnd() {
+  uint8_t nn = instruction_.get_nn();
+  uint8_t x = instruction_.get_x();
+  uint8_t random_byte = static_cast<uint8_t>(dist_(rng_));
+  registers_[x] = random_byte & nn;
 }

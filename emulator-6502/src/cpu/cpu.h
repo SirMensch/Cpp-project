@@ -1,18 +1,27 @@
+#ifndef __CPU_H__
+#define __CPU_H__
+
 #pragma once
 #include <array>
 #include <cstdint>
+#include <random>
 
 template <uint8_t start, uint8_t length, typename T> T extract_bits(T input);
 
 enum class OPC {
-  SYS = 0x0,  // system
-  JP = 0x1,   // jump
-  CALL = 0x2, // call address
-  SE = 0x3,   // skip if equal
-  SNE = 0x4,  // skip if not equal
-  LD = 0x6,   // load const in reg
-  ADD = 0x7,  // add to reg
-  R2RM = 0x8  // reg to reg math
+  SYS = 0x0,     // system
+  JP = 0x1,      // jump
+  CALL = 0x2,    // call address
+  SE = 0x3,      // skip if equal
+  SNE = 0x4,     // skip if not equal
+  LD = 0x6,      // load const in reg
+  ADD = 0x7,     // add to reg
+  R2RM = 0x8,    // reg to reg math
+  SNE_R2R = 0x9, // skif if not equal reg to reg
+  LD_I = 0xA,    // load const to index reg
+  JP_V0 = 0xB,   // jump by register0 + nnn
+  RND = 0xC,     // generate random
+  DRW = 0xD      // draw screen
 };
 
 enum class ALU {
@@ -24,7 +33,7 @@ enum class ALU {
   SUB = 0x5,  // subtract
   SHR = 0x6,  // shift right
   SUBN = 0x7, // reverse substract
-  SHL = 0xE   // shif left
+  SHL = 0xE   // shift left
 };
 
 struct Instruction {
@@ -53,9 +62,17 @@ private:
   static constexpr std::size_t STACK_POINTER_START = 0x0;
   static constexpr uint16_t PROGRAM_COUNTER_START = 0x200;
 
+  static constexpr std::size_t DISPLAY_ROWS = 32;
+  static constexpr std::size_t DISPLAY_COLS = 64;
+
+  std::random_device rd_{};
+  std::mt19937 rng_{rd_()};
+  std::uniform_int_distribution<uint16_t> dist_{0, 255};
+
   std::array<uint8_t, REGISTER_SIZE> registers_{};
   std::array<uint16_t, STACK_SIZE> stack_{};
   std::array<uint8_t, MEMORY_SIZE> memory_{};
+  std::array<uint8_t, DISPLAY_COLS * DISPLAY_ROWS> display_{};
 
   uint16_t index_register_{INDEX_REGISTER_START};
   uint16_t program_counter_{PROGRAM_COUNTER_START};
@@ -76,6 +93,10 @@ private:
   void execute_ld();
   void execute_add();
   void execute_alu();
+  void execute_sne_r2r();
+  void execute_ld_i();
+  void execute_jp_v0();
+  void execute_rnd();
 
 public:
   CPU();
@@ -85,3 +106,4 @@ public:
   void load_program(const uint8_t *program, std::size_t size);
   void execute_instruction();
 };
+#endif // __CPU_H__
