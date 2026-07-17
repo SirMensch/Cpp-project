@@ -90,6 +90,10 @@ void CPU::execute_instruction() {
     execute_misc();
     break;
   }
+  case OPC::KEY: {
+    execute_key();
+    break;
+  }
   default:
     break;
   }
@@ -278,6 +282,20 @@ void CPU::execute_misc() {
     registers_[x] = delay_timer_;
     break;
   }
+  case 0x0A: {
+    bool key_pressed = false;
+    for (uint8_t i = 0; i < KEYPAD_SIZE; i++) {
+      if (keypad_[i]) {
+        registers_[x] = i;
+        key_pressed = true;
+        break;
+      }
+    }
+    if (!key_pressed) {
+      program_counter_ -= 2;
+    }
+    break;
+  }
   case 0x15: {
     delay_timer_ = registers_[x];
     break;
@@ -299,6 +317,29 @@ void CPU::execute_misc() {
   case 0x65: {
     for (uint8_t i = 0; i <= x; i++) {
       registers_[i] = memory_[index_register_ + i];
+    }
+    break;
+  }
+  }
+}
+
+void CPU::execute_key() {
+  uint8_t x = instruction_.get_x();
+  uint16_t nn = instruction_.get_nn();
+  uint8_t key_id = registers_[x];
+  if (key_id >= KEYPAD_SIZE) {
+    return;
+  }
+  switch (nn) {
+  case 0x9E: { // skip if pressed
+    if (keypad_[key_id]) {
+      program_counter_ += 2;
+    }
+    break;
+  }
+  case 0xA1: {
+    if (!keypad_[key_id]) {
+      program_counter_ += 2;
     }
     break;
   }

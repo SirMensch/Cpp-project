@@ -1,6 +1,7 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 
+#include <vector>
 #pragma once
 #include <array>
 #include <cassert>
@@ -41,6 +42,7 @@ enum class OPC {
   JP_V0 = 0xB,   // jump by register0 + nnn
   RND = 0xC,     // generate random
   DRW = 0xD,     // draw screen
+  KEY = 0xE,     // key board press
   MISC = 0xF     // misc -> time and sound
 };
 
@@ -78,6 +80,7 @@ private:
   static constexpr std::size_t REGISTER_SIZE = 16;
   static constexpr std::size_t STACK_SIZE = 16;
   static constexpr std::size_t MEMORY_SIZE = 4096;
+  static constexpr std::size_t KEYPAD_SIZE = 16;
 
   static constexpr std::size_t INDEX_REGISTER_START = 0x0;
   static constexpr std::size_t STACK_POINTER_START = 0x0;
@@ -96,7 +99,7 @@ private:
   std::array<uint16_t, STACK_SIZE> stack_{};
   std::array<uint8_t, MEMORY_SIZE> memory_{};
   std::array<uint8_t, DISPLAY_COLS * DISPLAY_ROWS> display_{};
-  std::array<bool, 16> keypad_{};
+  std::array<bool, KEYPAD_SIZE> keypad_{};
 
   uint16_t index_register_{INDEX_REGISTER_START};
   uint16_t program_counter_{PROGRAM_COUNTER_START};
@@ -124,6 +127,7 @@ private:
   void execute_jp_v0();
   void execute_rnd();
   void execute_drw();
+  void execute_key();
   void execute_misc();
 
 public:
@@ -133,5 +137,6 @@ public:
   void reset();
   void load_program(const uint8_t *program, std::size_t size);
   void execute_instruction();
+
 };
 #endif // __CPU_H__
