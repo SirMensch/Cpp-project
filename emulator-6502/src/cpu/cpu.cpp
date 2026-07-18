@@ -1,4 +1,4 @@
-#include "cpu.h"
+#include "cpu/cpu.hpp"
 #include <cstdint>
 #include <stdexcept>
 #include <sys/types.h>
@@ -10,16 +10,17 @@ void CPU::reset() {
   stack_.fill(0);
   memory_.fill(0);
 
-  index_register_ = INDEX_REGISTER_START;
-  program_counter_ = PROGRAM_COUNTER_START;
-  stack_pointer_ = STACK_POINTER_START;
+  index_register_ = conf::INDEX_REGISTER_START;
+  program_counter_ = conf::PROGRAM_COUNTER_START;
+  stack_pointer_ = conf::STACK_POINTER_START;
 }
 
-void CPU::load_program(const uint8_t *program, std::size_t size) {
-  if (size > MEMORY_SIZE - PROGRAM_COUNTER_START) {
+void CPU::load_program(const std::vector<uint8_t> &program, std::size_t size) {
+  if (size > conf::MEMORY_SIZE - conf::PROGRAM_COUNTER_START) {
     throw std::runtime_error("Program size exceeds available memory.");
   }
-  std::copy(program, program + size, memory_.begin() + PROGRAM_COUNTER_START);
+  std::copy(program.begin(), program.end(),
+            memory_.begin() + conf::PROGRAM_COUNTER_START);
 }
 
 void CPU::get_next_instruction() {
@@ -113,7 +114,7 @@ void CPU::execute_cls() {} // TODO
 void CPU::execute_jp_addr() { program_counter_ = instruction_.get_nnn(); }
 
 void CPU::execute_call_addr() {
-  if (stack_pointer_ >= STACK_SIZE) {
+  if (stack_pointer_ >= conf::STACK_SIZE) {
     throw std::runtime_error(
         "Stack overflow: Maximum nested subroutine depth exceeded.");
   }
@@ -247,22 +248,23 @@ void CPU::execute_drw() {
   uint8_t x = instruction_.get_x();
   uint8_t y = instruction_.get_y();
   uint8_t n = instruction_.get_n();
-  uint8_t start_col = registers_[x] % DISPLAY_COLS;
-  uint8_t start_row = registers_[y] % DISPLAY_ROWS;
+  uint8_t start_col = registers_[x] % conf::DISPLAY_COLS;
+  uint8_t start_row = registers_[y] % conf::DISPLAY_ROWS;
   status_reg() = 0x0;
 
   for (uint16_t row = 0; row < n; row++) { // bytes
-    if (start_row + row >= DISPLAY_ROWS) {
+    if (start_row + row >= conf::DISPLAY_ROWS) {
       break;
     }
     uint8_t sprite = memory_[index_register_ + row];
     for (uint16_t col = 0; col < 8; col++) { // bits
-      if (start_col + col >= DISPLAY_COLS) {
+      // std::cout << "row: " << row << " col: " << col << "\n";
+      if (start_col + col >= conf::DISPLAY_COLS) {
         break;
       }
-      if (extract_bits(sprite, 7 - col, 0x1)) {
+      if (extract_bits(7 - col, 0x1, sprite)) {
         uint16_t disp_addr =
-            (start_row + row) * DISPLAY_COLS + (start_col + col);
+            (start_row + row) * conf::DISPLAY_COLS + (start_col + col);
         uint8_t current_bit = display_[disp_addr];
         uint8_t next_bit = current_bit ^ 0x1;
         display_[disp_addr] = next_bit;
@@ -284,7 +286,7 @@ void CPU::execute_misc() {
   }
   case 0x0A: {
     bool key_pressed = false;
-    for (uint8_t i = 0; i < KEYPAD_SIZE; i++) {
+    for (uint8_t i = 0; i < conf::KEYPAD_SIZE; i++) {
       if (keypad_[i]) {
         registers_[x] = i;
         key_pressed = true;
@@ -327,7 +329,7 @@ void CPU::execute_key() {
   uint8_t x = instruction_.get_x();
   uint16_t nn = instruction_.get_nn();
   uint8_t key_id = registers_[x];
-  if (key_id >= KEYPAD_SIZE) {
+  if (key_id >= conf::KEYPAD_SIZE) {
     return;
   }
   switch (nn) {
@@ -344,4 +346,8 @@ void CPU::execute_key() {
     break;
   }
   }
+}
+
+void CPU::load_keyboard(std::array<bool, conf::KEYPAD_SIZE> keys) {
+  keypad_ = keys;
 }

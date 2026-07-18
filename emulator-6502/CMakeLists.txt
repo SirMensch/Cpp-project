@@ -5,9 +5,15 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-file(GLOB_RECURSE SRC_FILES 
-    "src/*.cpp"
-    "src/cpu/*.cpp"
-)
+find_package(SFML 3 COMPONENTS Graphics Window System REQUIRED)
 
-add_executable(emulator-6502 src/main.cpp ${SRC_FILES})
+file(GLOB_RECURSE SRC_FILES "src/*.cpp")
+add_executable(emulator-6502 ${SRC_FILES})
+
+target_include_directories(emulator-6502 PRIVATE include)
+
+target_link_libraries(emulator-6502 PRIVATE 
+    SFML::Graphics 
+    SFML::Window 
+    SFML::System
+)

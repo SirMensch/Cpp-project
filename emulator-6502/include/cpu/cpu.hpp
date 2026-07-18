@@ -1,18 +1,23 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 
-#include <vector>
 #pragma once
+#include "config.hpp"
 #include <array>
 #include <cassert>
 #include <cstdint>
+#include <iomanip>
+#include <iostream>
 #include <random>
 
 template <typename T>
 constexpr T extract_bits(uint8_t start, uint8_t length, T input) {
   static_assert(std::is_integral_v<T>, "Template type must be an integer");
   const uint8_t type_bits = sizeof(T) * 8;
-  assert(start + length <= type_bits && "Length exceeds data type size");
+  assert((start + length <= type_bits) ||
+         (std::cerr << std::dec << " | start: " << +start
+                    << " | length: " << +length << "\n",
+          false));
 
   if (length == type_bits) {
     return input;
@@ -60,50 +65,38 @@ enum class ALU {
 
 struct Instruction {
 private:
-  uint16_t data = 0;
+  uint16_t data_ = 0;
 
 public:
   Instruction();
-  Instruction(uint16_t inst) : data(inst) {};
-  void update_instruction(uint16_t inst) { data = inst; };
-  uint16_t get_x() { return extract_bits<0x8, 0x4>(data); };
-  uint16_t get_y() { return extract_bits<0x4, 0x4>(data); };
-  ALU get_alu_inst() { return static_cast<ALU>(extract_bits<0x0, 0x4>(data)); };
-  uint8_t get_n() { return extract_bits<0x0, 0x4>(data); };
-  uint16_t get_nn() { return extract_bits<0x0, 0x8>(data); };
-  uint16_t get_nnn() { return extract_bits<0x0, 0xC>(data); };
-  OPC get_opc() { return static_cast<OPC>(extract_bits<0xC, 0x4>(data)); };
+  Instruction(uint16_t inst) : data_(inst) {};
+  void update_instruction(uint16_t inst) { data_ = inst; };
+  uint16_t get_x() { return extract_bits<0x8, 0x4>(data_); };
+  uint16_t get_y() { return extract_bits<0x4, 0x4>(data_); };
+  ALU get_alu_inst() {
+    return static_cast<ALU>(extract_bits<0x0, 0x4>(data_));
+  };
+  uint8_t get_n() { return extract_bits<0x0, 0x4>(data_); };
+  uint16_t get_nn() { return extract_bits<0x0, 0x8>(data_); };
+  uint16_t get_nnn() { return extract_bits<0x0, 0xC>(data_); };
+  OPC get_opc() { return static_cast<OPC>(extract_bits<0xC, 0x4>(data_)); };
 };
 
 class CPU {
 private:
-  static constexpr std::size_t REGISTER_SIZE = 16;
-  static constexpr std::size_t STACK_SIZE = 16;
-  static constexpr std::size_t MEMORY_SIZE = 4096;
-  static constexpr std::size_t KEYPAD_SIZE = 16;
-
-  static constexpr std::size_t INDEX_REGISTER_START = 0x0;
-  static constexpr std::size_t STACK_POINTER_START = 0x0;
-  static constexpr uint16_t PROGRAM_COUNTER_START = 0x200;
-
-  static constexpr std::size_t DISPLAY_ROWS = 32;
-  static constexpr std::size_t DISPLAY_COLS = 64;
-
-  static constexpr std::size_t BITS_PER_BYTE = 8;
-
   std::random_device rd_{};
   std::mt19937 rng_{rd_()};
   std::uniform_int_distribution<uint16_t> dist_{0, 255};
 
-  std::array<uint8_t, REGISTER_SIZE> registers_{};
-  std::array<uint16_t, STACK_SIZE> stack_{};
-  std::array<uint8_t, MEMORY_SIZE> memory_{};
-  std::array<uint8_t, DISPLAY_COLS * DISPLAY_ROWS> display_{};
-  std::array<bool, KEYPAD_SIZE> keypad_{};
+  std::array<uint8_t, conf::REGISTER_SIZE> registers_{};
+  std::array<uint16_t, conf::STACK_SIZE> stack_{};
+  std::array<uint8_t, conf::MEMORY_SIZE> memory_{};
+  std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS> display_{};
+  std::array<bool, conf::KEYPAD_SIZE> keypad_{};
 
-  uint16_t index_register_{INDEX_REGISTER_START};
-  uint16_t program_counter_{PROGRAM_COUNTER_START};
-  uint8_t stack_pointer_{STACK_POINTER_START};
+  uint16_t index_register_{conf::INDEX_REGISTER_START};
+  uint16_t program_counter_{conf::PROGRAM_COUNTER_START};
+  uint8_t stack_pointer_{conf::STACK_POINTER_START};
   uint8_t delay_timer_{0};
   uint8_t sound_timer_{0};
 
@@ -132,11 +125,15 @@ private:
 
 public:
   CPU();
-  ~CPU();
+  ~CPU() = default;
 
   void reset();
-  void load_program(const uint8_t *program, std::size_t size);
+  void load_program(const std::vector<uint8_t> &program, std::size_t size);
+  void load_keyboard(std::array<bool, conf::KEYPAD_SIZE> keys);
   void execute_instruction();
-
+  const std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS> &
+  get_display() const {
+    return display_;
+  };
 };
 #endif // __CPU_H__
