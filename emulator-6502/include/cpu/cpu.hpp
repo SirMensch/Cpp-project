@@ -6,18 +6,15 @@
 #include <array>
 #include <cassert>
 #include <cstdint>
-#include <iomanip>
-#include <iostream>
 #include <random>
+#include <spdlog/spdlog.h>
 
 template <typename T>
 constexpr T extract_bits(uint8_t start, uint8_t length, T input) {
   static_assert(std::is_integral_v<T>, "Template type must be an integer");
   const uint8_t type_bits = sizeof(T) * 8;
   assert((start + length <= type_bits) ||
-         (std::cerr << std::dec << " | start: " << +start
-                    << " | length: " << +length << "\n",
-          false));
+         (spdlog::error(" | start: {} | length: {}", +start, +length), false));
 
   if (length == type_bits) {
     return input;
@@ -39,6 +36,7 @@ enum class OPC {
   CALL = 0x2,    // call address
   SE = 0x3,      // skip if equal
   SNE = 0x4,     // skip if not equal
+  SE_R2R = 0x5,  // skif if  equal reg to reg
   LD = 0x6,      // load const in reg
   ADD = 0x7,     // add to reg
   R2RM = 0x8,    // reg to reg math
@@ -106,12 +104,13 @@ private:
 
   void get_next_instruction();
   void execute_sys();
-  void execute_cls(); // TODO
+  void execute_cls();
+  void execute_ret();
   void execute_jp_addr();
   void execute_call_addr();
   void execute_skip_eq();
   void execute_skip_not_eq();
-  void execute_ret();
+  void execute_se_r2r();
   void execute_ld();
   void execute_add();
   void execute_alu();
@@ -129,7 +128,7 @@ public:
 
   void reset();
   void load_program(const std::vector<uint8_t> &program, std::size_t size);
-  void load_keyboard(std::array<bool, conf::KEYPAD_SIZE> keys);
+  void load_keyboard(const std::array<bool, conf::KEYPAD_SIZE> &keys);
   void execute_instruction();
   const std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS> &
   get_display() const {

@@ -1,10 +1,21 @@
 #pragma once
+#include "spdlog/spdlog.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
 #include <cstdint>
+#include <spdlog/common.h>
 
 namespace conf {
+
+#if ENABLE_MASTER_DEBUG
+inline constexpr spdlog::level::level_enum SPDLOG_LEVEL = spdlog::level::trace;
+#else
+inline constexpr spdlog::level::level_enum SPDLOG_LEVEL = spdlog::level::info;
+#endif
+
+inline constexpr std::size_t CPU_CYC_PER_FPS = 10;
+
 inline constexpr std::size_t REGISTER_SIZE = 16;
 inline constexpr std::size_t STACK_SIZE = 16;
 inline constexpr std::size_t MEMORY_SIZE = 4096;

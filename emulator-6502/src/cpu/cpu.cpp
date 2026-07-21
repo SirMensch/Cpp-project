@@ -1,5 +1,7 @@
 #include "cpu/cpu.hpp"
+#include "config.hpp"
 #include <cstdint>
+#include <spdlog/spdlog.h>
 #include <stdexcept>
 #include <sys/types.h>
 
@@ -9,6 +11,7 @@ void CPU::reset() {
   registers_.fill(0);
   stack_.fill(0);
   memory_.fill(0);
+  display_.fill(0);
 
   index_register_ = conf::INDEX_REGISTER_START;
   program_counter_ = conf::PROGRAM_COUNTER_START;
@@ -28,6 +31,11 @@ void CPU::get_next_instruction() {
   instruction |= memory_[program_counter_++] << 8; // MSB
   instruction |= memory_[program_counter_++];      // LSB
   instruction_.update_instruction(instruction);
+  if (delay_timer_ > 0) {
+    --delay_timer_;
+  }
+
+  SPDLOG_DEBUG("inst: 0x{:04X}, pc: 0x{:04X}", instruction, program_counter_);
 }
 
 void CPU::execute_instruction() {
@@ -53,6 +61,10 @@ void CPU::execute_instruction() {
   }
   case OPC::SNE: {
     execute_skip_not_eq();
+    break;
+  }
+  case OPC::SE_R2R: {
+    execute_se_r2r();
     break;
   }
   case OPC::LD: {
@@ -96,6 +108,8 @@ void CPU::execute_instruction() {
     break;
   }
   default:
+    SPDLOG_ERROR("Unknown Inst: {:02X}{:06X}", static_cast<uint8_t>(opc),
+                 instruction_.get_nnn());
     break;
   }
 }
@@ -109,7 +123,7 @@ void CPU::execute_sys() {
   }
 }
 
-void CPU::execute_cls() {} // TODO
+void CPU::execute_cls() { display_.fill(0); }
 
 void CPU::execute_jp_addr() { program_counter_ = instruction_.get_nnn(); }
 
@@ -122,6 +136,8 @@ void CPU::execute_call_addr() {
   stack_pointer_++;
   uint16_t nnn = instruction_.get_nnn();
   program_counter_ = nnn;
+
+  SPDLOG_DEBUG("Call|SP: {}", stack_pointer_);
 }
 
 void CPU::execute_ret() {
@@ -131,6 +147,8 @@ void CPU::execute_ret() {
   }
   stack_pointer_--;
   program_counter_ = stack_[stack_pointer_];
+
+  SPDLOG_DEBUG("Ret|SP: {}", stack_pointer_);
 }
 
 void CPU::execute_ld() {
@@ -172,14 +190,17 @@ void CPU::execute_alu() {
   }
   case ALU::OR: {
     registers_[x] |= registers_[y];
+    status_reg() = 0;
     break;
   }
   case ALU::AND: {
     registers_[x] &= registers_[y];
+    status_reg() = 0;
     break;
   }
   case ALU::XOR: {
     registers_[x] ^= registers_[y];
+    status_reg() = 0;
     break;
   }
   case ALU::ADD: {
@@ -203,12 +224,14 @@ void CPU::execute_alu() {
     break;
   }
   case ALU::SHR: {
+    registers_[x] = registers_[y];
     uint8_t flag = extract_bits<0, 1>(registers_[x]);
     registers_[x] >>= 0x1;
     status_reg() = flag;
     break;
   }
   case ALU::SHL: {
+    registers_[x] = registers_[y];
     uint8_t flag = extract_bits<7, 1>(registers_[x]);
     registers_[x] <<= 0x1;
     status_reg() = flag;
@@ -250,7 +273,7 @@ void CPU::execute_drw() {
   uint8_t n = instruction_.get_n();
   uint8_t start_col = registers_[x] % conf::DISPLAY_COLS;
   uint8_t start_row = registers_[y] % conf::DISPLAY_ROWS;
-  status_reg() = 0x0;
+  bool pixel_removed = false;
 
   for (uint16_t row = 0; row < n; row++) { // bytes
     if (start_row + row >= conf::DISPLAY_ROWS) {
@@ -258,7 +281,6 @@ void CPU::execute_drw() {
     }
     uint8_t sprite = memory_[index_register_ + row];
     for (uint16_t col = 0; col < 8; col++) { // bits
-      // std::cout << "row: " << row << " col: " << col << "\n";
       if (start_col + col >= conf::DISPLAY_COLS) {
         break;
       }
@@ -269,11 +291,12 @@ void CPU::execute_drw() {
         uint8_t next_bit = current_bit ^ 0x1;
         display_[disp_addr] = next_bit;
         if (current_bit) {
-          status_reg() = 0x1;
+          pixel_removed = true;
         }
       }
     }
   }
+  status_reg() = pixel_removed;
 }
 
 void CPU::execute_misc() {
@@ -314,12 +337,14 @@ void CPU::execute_misc() {
     for (uint8_t i = 0; i <= x; i++) {
       memory_[index_register_ + i] = registers_[i];
     }
+    index_register_ += x + 1;
     break;
   }
   case 0x65: {
     for (uint8_t i = 0; i <= x; i++) {
       registers_[i] = memory_[index_register_ + i];
     }
+    index_register_ += x + 1;
     break;
   }
   }
@@ -335,12 +360,14 @@ void CPU::execute_key() {
   switch (nn) {
   case 0x9E: { // skip if pressed
     if (keypad_[key_id]) {
+      uint16_t next_op = memory_[program_counter_];
       program_counter_ += 2;
     }
     break;
   }
   case 0xA1: {
     if (!keypad_[key_id]) {
+      uint16_t next_op = memory_[program_counter_];
       program_counter_ += 2;
     }
     break;
@@ -348,6 +375,14 @@ void CPU::execute_key() {
   }
 }
 
-void CPU::load_keyboard(std::array<bool, conf::KEYPAD_SIZE> keys) {
+void CPU::load_keyboard(const std::array<bool, conf::KEYPAD_SIZE> &keys) {
   keypad_ = keys;
+}
+
+void CPU::execute_se_r2r() {
+  uint8_t x = instruction_.get_x();
+  uint8_t y = instruction_.get_y();
+  if (registers_[x] == registers_[y]) {
+    program_counter_ += 2;
+  }
 }
