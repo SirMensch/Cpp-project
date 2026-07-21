@@ -39,14 +39,18 @@ void Renderer::draw(const disp_array &screen) {
   window_.display();
 }
 
-void Renderer::handle_events() {
+bool Renderer::is_running() {
+  bool is_running = true;
   while (const std::optional event = window_.pollEvent()) {
     if (event->is<sf::Event::Closed>()) {
       window_.close();
+      is_running = false;
     } else if (const auto *keyPressed = event->getIf<sf::Event::KeyPressed>()) {
       if (keyPressed->scancode == sf::Keyboard::Scancode::Escape) {
         window_.close();
+        is_running = false;
       }
     }
   }
+  return is_running;
 }

@@ -23,7 +23,7 @@ private:
 public:
   Renderer();
   void draw(const disp_array &screen);
-  void handle_events();
+  bool is_running();
 };
 
 #endif // __GRAPHICS_H__
