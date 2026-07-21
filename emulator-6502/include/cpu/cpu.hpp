@@ -1,6 +1,7 @@
 #ifndef __CPU_H__
 #define __CPU_H__
 
+#include "platform/graphics.hpp"
 #pragma once
 #include "config.hpp"
 #include <array>
@@ -89,7 +90,7 @@ private:
   std::array<uint8_t, conf::REGISTER_SIZE> registers_{};
   std::array<uint16_t, conf::STACK_SIZE> stack_{};
   std::array<uint8_t, conf::MEMORY_SIZE> memory_{};
-  std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS> display_{};
+  disp_array display_{};
   std::array<bool, conf::KEYPAD_SIZE> keypad_{};
 
   uint16_t index_register_{conf::INDEX_REGISTER_START};
@@ -130,9 +131,6 @@ public:
   void load_program(const std::vector<uint8_t> &program, std::size_t size);
   void load_keyboard(const std::array<bool, conf::KEYPAD_SIZE> &keys);
   void execute_instruction();
-  const std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS> &
-  get_display() const {
-    return display_;
-  };
+  const disp_array &get_display() const { return display_; };
 };
 #endif // __CPU_H__

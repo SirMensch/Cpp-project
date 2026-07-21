@@ -57,3 +57,5 @@ inline constexpr std::array<sf::Keyboard::Key, KEYPAD_SIZE> KEY_MAP = {
 };
 
 } // namespace conf
+
+using disp_array = std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS>;

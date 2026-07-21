@@ -7,11 +7,8 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Sprite.hpp>
 #include <SFML/Graphics/Texture.hpp>
-#include <array>
 #include <cstdint>
 #include <vector>
-
-using disp_array = std::array<uint8_t, conf::DISPLAY_COLS * conf::DISPLAY_ROWS>;
 
 class Renderer {
 private:

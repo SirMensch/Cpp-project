@@ -1,0 +1,3 @@
+[submodule "emulator-6502/tests/roms/timendus"]
+	path = emulator-6502/tests/roms/timendus
+	url = https://github.com/Timendus/chip8-test-suite.git
