@@ -3,9 +3,7 @@
 #include "platform/graphics.hpp"
 #include "platform/keyboard_input.hpp"
 #include "platform/rom_loader.hpp"
-#include "spdlog/spdlog.h"
-#include <cstddef>
-#include <cstdint>
+#include <spdlog/spdlog.h>
 
 int main(int argc, char **argv) {
 
@@ -15,6 +13,7 @@ int main(int argc, char **argv) {
   std::string filename;
   if (argc < 2) {
     spdlog::error("Please add a filename as first argument.");
+    return -1;
   } else {
     filename = argv[1];
   }
@@ -36,6 +35,26 @@ int main(int argc, char **argv) {
     }
 
     renderer.draw(cpu.get_display());
+  }
+
+// get solutions
+#include <filesystem>
+#include <fstream>
+  auto pixels = cpu.get_display();
+  std::filesystem::path absolute_dir =
+      "/home/ryuuma/repos/Cpp-project/emulator-6502/tests/solutions";
+  if (!std::filesystem::exists(absolute_dir)) {
+    std::filesystem::create_directories(absolute_dir);
+  }
+
+  std::filesystem::path p(filename);
+  std::string filename_o = p.filename().stem().string() + ".bin";
+
+  std::filesystem::path full_path = absolute_dir / filename_o;
+
+  std::ofstream file(full_path, std::ios::binary);
+  if (file.is_open()) {
+    file.write(reinterpret_cast<const char *>(pixels.data()), pixels.size());
   }
 
   return 0;

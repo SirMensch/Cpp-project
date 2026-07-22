@@ -2,11 +2,11 @@
 #include "cpu/cpu.hpp"
 #include "platform/rom_loader.hpp"
 #include <cstdint>
+#include <filesystem>
 #include <gtest/gtest.h>
 #include <numeric>
 #include <spdlog/common.h>
 #include <spdlog/spdlog.h>
-#include <string>
 
 class TimendusTestSuite : public ::testing::Test {
 protected:

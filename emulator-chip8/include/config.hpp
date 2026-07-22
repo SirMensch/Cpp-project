@@ -1,10 +1,10 @@
 #pragma once
-#include "spdlog/spdlog.h"
 #include <SFML/Window/Keyboard.hpp>
 #include <array>
 #include <cstddef>
 #include <cstdint>
 #include <spdlog/common.h>
+#include <spdlog/spdlog.h>
 
 namespace conf {
 
